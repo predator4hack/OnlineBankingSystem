@@ -1,11 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AddCustomer from './Components/addCustomer';
+import React, { Component }  from 'react';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AddCustomer/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
