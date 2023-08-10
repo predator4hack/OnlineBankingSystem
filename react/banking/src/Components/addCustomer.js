@@ -39,7 +39,7 @@ const AddCustomer = () => {
     const submitActionHandler = (event) => {
         event.preventDefault();
         axios.post(baseURL, {
-            userid: userid,
+            userId: userid,
             password: password,
             name: name,
             email: email,
@@ -47,7 +47,7 @@ const AddCustomer = () => {
             aadhar: aadhar
         })
         .then((response) => {
-            alert("Customer" + name + "added!");
+            alert("Customer " + name + " added!");
         }).catch(error => {
             alert("error == " + error);
         })
