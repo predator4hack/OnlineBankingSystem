@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {Button, Form, FormGroup, Input, Label, Row, Col, Card, CardBody, CardHeader} from 'reactstrap';
 
 const AddCustomer = () => {
     const baseURL = "http://localhost:9080/saveCustomer";
@@ -63,23 +64,47 @@ const AddCustomer = () => {
     }
 
     return(
-        <form onSubmit={submitActionHandler}>
-            UserId:
-            <input type="text" value={userid} onChange={useridChangeHandler} placeholder="Enter User ID here" required/><br/>
-            Password:
-            <input type="password" value={password} onChange={passwordChangeHandler} placeholder="Enter Password here" required/><br/>
-            Name:
-            <input type="text" value={name} onChange={nameChangeHandler} placeholder="Enter name" required/><br/>
-            Email:
-            <input type="email" value={email} onChange={emailChangeHandler} placeholder="Enter email" required/><br/>
-            Mobile:
-            <input type="text" value={mobile} onChange={mobileChangeHandler} placeholder="Enter mobile" required/><br/>
-            Aadhar:
-            <input type="text" value={aadhar} onChange={aadharChangeHandler} placeholder="Enter aadhar" required/><br/>
-            
-            <button type="submit">Sign Up</button>
-            <button type="submit" onClick={() => cancelHandler()}>Cancel</button>
-        </form>
+        <div className="container mt-4 mb-4">
+            <Row className="row justify-content-center">
+                <Col className="col-md-8">
+                    <Card>
+                        <CardHeader>
+                            <h2>Register</h2>
+                        </CardHeader>
+                        <CardBody>
+                            <Form onSubmit={submitActionHandler} className="form">
+                                <FormGroup>
+                                    <Label>User ID</Label>
+                                    <Input type="text" value={userid} onChange={useridChangeHandler} placeholder="Enter User ID here" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Password</Label>
+                                    <Input type="password" value={password} onChange={passwordChangeHandler} placeholder="Enter Password here" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Name</Label>
+                                    <Input type="text" value={name} onChange={nameChangeHandler} placeholder="Enter name" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Email</Label>
+                                    <Input type="email" value={email} onChange={emailChangeHandler} placeholder="Enter email" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Mobile</Label>
+                                    <Input type="text" value={mobile} onChange={mobileChangeHandler} placeholder="Enter mobile" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Aadhar</Label>
+                                    <Input type="text" value={aadhar} onChange={aadharChangeHandler} placeholder="Enter aadhar" required></Input>
+                                </FormGroup>
+                                <Button type="submit" color="primary">Sign Up</Button>
+                                <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
+                            </Form>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </div>
     );
 }
 
