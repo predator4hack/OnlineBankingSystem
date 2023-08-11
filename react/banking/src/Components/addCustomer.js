@@ -50,6 +50,7 @@ const AddCustomer = () => {
         .then((response) => {
             alert("Customer " + name + " added!");
             localStorage.setItem('UserID', userid);
+            window.location.href = '/';
         }).catch(error => {
             alert("error == " + error);
             localStorage.clear();
