@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.Banking.model.Customer;
+import com.bank.Banking.model.LoginModel;
 import com.bank.Banking.service.CustomerService;
 
 @RestController
@@ -20,5 +21,11 @@ public class CustomerController {
 	{
 		Customer c = custService.saveCustomer(cust);
 		return c;
+	}
+	
+	@PostMapping("/login")
+	public String validateCustomer(@RequestBody LoginModel u)
+	{
+		return custService.validateCustomer(u);
 	}
 }
