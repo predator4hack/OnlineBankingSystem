@@ -10,7 +10,7 @@ import com.bank.Banking.model.Customer;
 import com.bank.Banking.service.CustomerService;
 
 @RestController
-@CrossOrigin("http://localhoast:3000")
+@CrossOrigin("*")
 public class CustomerController {
 	@Autowired
 	CustomerService custService;
