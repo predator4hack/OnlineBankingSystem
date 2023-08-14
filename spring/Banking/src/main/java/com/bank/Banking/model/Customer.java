@@ -3,9 +3,12 @@ package com.bank.Banking.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 
@@ -32,10 +35,60 @@ public class Customer {
 	@Column(nullable=false)
 	private String aadhar;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
+	@Column(nullable=false)
+	private String dob;
+	
+	@Column(nullable=false)
+	private String currentAddress;
+	
+	@Column(nullable=false)
+	private String permanentAddress;
+	
+	@Column(nullable=false)
+	private String fathername;
+	
+	@Column(nullable=false)
+	private String mothername;
+	
+	public String getDob() {
+		return dob;
+	}
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	public String getCurrentAddress() {
+		return currentAddress;
+	}
+	public void setCurrentAddress(String currentAddress) {
+		this.currentAddress = currentAddress;
+	}
+	public String getPermanentAddress() {
+		return permanentAddress;
+	}
+	public void setPermanentAddress(String permanentAddress) {
+		this.permanentAddress = permanentAddress;
+	}
+	public String getFathername() {
+		return fathername;
+	}
+	public void setFathername(String fathername) {
+		this.fathername = fathername;
+	}
+	public String getMothername() {
+		return mothername;
+	}
+	public void setMothername(String mothername) {
+		this.mothername = mothername;
+	}
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Account> account;
 
+	public List<Account> getAccount() {
+		return account;
+	}
+	public void setAccount(List<Account> account) {
+		this.account = account;
+	}
 	public String getUserId() {
 		return userId;
 	}

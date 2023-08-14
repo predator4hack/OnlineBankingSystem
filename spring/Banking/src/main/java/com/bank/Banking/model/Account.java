@@ -12,6 +12,16 @@ public class Account {
 	private String acctype;
 	private double balance;
 	
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private Customer user;
+	
+	public Customer getUser() {
+		return user;
+	}
+	public void setUser(Customer user) {
+		this.user = user;
+	}
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="acc_no")
 	private List<Transaction> transaction;

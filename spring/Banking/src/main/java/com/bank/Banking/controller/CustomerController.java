@@ -17,10 +17,9 @@ public class CustomerController {
 	CustomerService custService;
 	
 	@PostMapping("/saveCustomer")
-	public Customer saveCustomer(@RequestBody Customer cust)
+	public String saveCustomer(@RequestBody Customer cust)
 	{
-		Customer c = custService.saveCustomer(cust);
-		return c;
+		return custService.saveCustomer(cust);
 	}
 	
 	@PostMapping("/login")

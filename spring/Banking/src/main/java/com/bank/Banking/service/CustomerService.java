@@ -14,10 +14,19 @@ public class CustomerService {
 	@Autowired
 	CustomerRepository custRepo;
 	
-	public Customer saveCustomer(Customer cust)
+	public String saveCustomer(Customer cust)
 	{
-		Customer obj = custRepo.save(cust);
-		return obj;
+		String result = "";
+		Optional<Customer> o = custRepo.findById(cust.getUserId());
+		if(o.isPresent())
+		{
+			result = "Customer already exists!";
+		}
+		else {
+			result = "Customer created successfully!";
+			Customer obj = custRepo.save(cust);
+		}
+		return result;
 	}
 	
 	public String validateCustomer(LoginModel u)
