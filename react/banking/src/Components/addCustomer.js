@@ -12,6 +12,11 @@ const AddCustomer = () => {
     const [email, setEmail] = useState("");
     const [mobile, setMobile] = useState("");
     const [aadhar, setAadhar] = useState("");
+    const [dob, setDob] = useState("");
+    const [fathername, setFathername] = useState("");
+    const [mothername, setMothername] = useState("");
+    const [curradd, setCurradd] = useState("");
+    const [permadd, setPermadd] = useState("");
 
     const useridChangeHandler = (event) => {
         setUserid(event.target.value);
@@ -37,6 +42,26 @@ const AddCustomer = () => {
         setAadhar(event.target.value);
     }
 
+    const fathernameChangeHandler = (event) => {
+        setFathername(event.target.value);
+    }
+
+    const mothernameChangeHandler = (event) => {
+        setMothername(event.target.value);
+    }
+
+    const dobChangeHandler = (event) => {
+        setDob(event.target.value);
+    }
+
+    const curraddChangeHandler = (event) => {
+        setCurradd(event.target.value);
+    }
+
+    const permaddChangeHandler = (event) => {
+        setPermadd(event.target.value);
+    }
+
     const submitActionHandler = (event) => {
         event.preventDefault();
         axios.post(baseURL, {
@@ -45,15 +70,20 @@ const AddCustomer = () => {
             name: name,
             email: email,
             mobile: mobile,
-            aadhar: aadhar
+            aadhar: aadhar,
+            fathername: fathername,
+            mothername: mothername,
+            dob: dob,
+            permanentAddress: permadd,
+            currentAddress: curradd
         })
         .then((response) => {
             alert("Customer " + name + " added!");
-            localStorage.setItem('UserID', userid);
-            window.location.href = '/';
+            sessionStorage.setItem('UserID', userid);
+            navigate("/");
         }).catch(error => {
             alert("error == " + error);
-            localStorage.clear();
+            sessionStorage.clear();
         })
     }
 
@@ -64,6 +94,11 @@ const AddCustomer = () => {
         setEmail("");
         setMobile("");
         setAadhar("");
+        setDob("");
+        setCurradd("");
+        setPermadd("");
+        setFathername("");
+        setMothername("");
     }
 
     return(
@@ -99,6 +134,26 @@ const AddCustomer = () => {
                                 <FormGroup>
                                     <Label>Aadhar</Label>
                                     <Input type="text" value={aadhar} onChange={aadharChangeHandler} placeholder="Enter aadhar" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>DOB</Label>
+                                    <Input type="text" value={dob} onChange={dobChangeHandler} placeholder="Enter DOB" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Father Name</Label>
+                                    <Input type="text" value={fathername} onChange={fathernameChangeHandler} placeholder="Enter father's name" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Mother Name</Label>
+                                    <Input type="text" value={mothername} onChange={mothernameChangeHandler} placeholder="Enter mother's name" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Current Address</Label>
+                                    <Input type="text" value={curradd} onChange={curraddChangeHandler} placeholder="Enter current address" required></Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Permanent Address</Label>
+                                    <Input type="text" value={permadd} onChange={permaddChangeHandler} placeholder="Enter permanent address" required></Input>
                                 </FormGroup>
                                 <Button type="submit" color="primary">Sign Up</Button>
                                 <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>

@@ -26,15 +26,15 @@ const Login = () => {
         .then((response) => {
             alert(response.data);
             if(response.data === 'Login success') {
-                localStorage.setItem('UserID', userid);
-                window.location.href = '/';
+                sessionStorage.setItem('UserID', userid);
+                navigate("/");
             }
             else {
-                localStorage.clear();
+                sessionStorage.clear();
             }
         }).catch(error => {
             alert("error == " + error);
-            localStorage.clear();
+            sessionStorage.clear();
         })
     }
 
