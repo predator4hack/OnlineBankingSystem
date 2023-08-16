@@ -5,14 +5,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.Banking.dao.AccRepository;
 import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
+import java.util.List;
 
 @Service
 public class CustomerService {
 	@Autowired
 	CustomerRepository custRepo;
+	AccRepository accRepo;
 	
 	public String saveCustomer(Customer cust)
 	{
@@ -56,5 +59,10 @@ public class CustomerService {
 			}
 		}
 		return result;
+	}
+	
+	public List<Long> fetchAccounts(String username)
+	{
+		return accRepo.findByUsername(username);
 	}
 }

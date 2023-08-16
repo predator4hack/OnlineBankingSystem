@@ -2,14 +2,9 @@ package com.bank.Banking.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-
-import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 
 
 @Entity
@@ -50,6 +45,9 @@ public class Customer {
 	@Column(nullable=false)
 	private String mothername;
 	
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Account> account;
+	
 	public String getDob() {
 		return dob;
 	}
@@ -80,8 +78,6 @@ public class Customer {
 	public void setMothername(String mothername) {
 		this.mothername = mothername;
 	}
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<Account> account;
 
 	public List<Account> getAccount() {
 		return account;

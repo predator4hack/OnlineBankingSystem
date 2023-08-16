@@ -21,6 +21,10 @@ public class AccountService {
 		long generatedNumber = 0;
 		Random rand = new Random();
 		generatedNumber = 999999 + rand.nextLong(1000000);
+		while(accRepo.findById(generatedNumber).isPresent())
+		{
+			generatedNumber = 999999 + rand.nextLong(1000000);
+		}
 		Customer u = custRepo.findById(userid).get();
 		account.setUser(u);
 		account.setAccno(generatedNumber);

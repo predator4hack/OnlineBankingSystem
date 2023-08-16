@@ -3,8 +3,6 @@ package com.bank.Banking.model;
 import jakarta.persistence.*;
 import java.util.List;
 
-
-
 @Entity
 public class Account {
 	@Id
@@ -16,16 +14,15 @@ public class Account {
 	@JoinColumn(name="userId")
 	private Customer user;
 	
+	@OneToMany(mappedBy="acc_no", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Transaction> transaction;
+	
 	public Customer getUser() {
 		return user;
 	}
 	public void setUser(Customer user) {
 		this.user = user;
 	}
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="acc_no")
-	private List<Transaction> transaction;
-	
 	
 	public long getAccno() {
 		return accno;
@@ -45,5 +42,10 @@ public class Account {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
+	public List<Transaction> getTransaction() {
+		return transaction;
+	}
+	public void setTransaction(List<Transaction> transaction) {
+		this.transaction = transaction;
+	}
 }
