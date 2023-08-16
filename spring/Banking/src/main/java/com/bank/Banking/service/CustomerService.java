@@ -15,6 +15,8 @@ import java.util.List;
 public class CustomerService {
 	@Autowired
 	CustomerRepository custRepo;
+	
+	@Autowired
 	AccRepository accRepo;
 	
 	public String saveCustomer(Customer cust)
