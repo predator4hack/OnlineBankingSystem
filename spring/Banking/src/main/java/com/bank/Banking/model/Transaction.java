@@ -1,4 +1,6 @@
 package com.bank.Banking.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Transaction {
 	private String timestamp;
 	private String status;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="accno")
 	private Account acc_no;

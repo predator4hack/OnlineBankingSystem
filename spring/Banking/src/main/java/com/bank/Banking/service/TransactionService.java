@@ -1,5 +1,7 @@
 package com.bank.Banking.service;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class TransactionService {
 			trans.setStatus("FAIL");
 		else {
 			Account acc2 = accRepo.findById(toAccNum).get();
-			trans.setStatus("SUCESS");
+			trans.setStatus("SUCCESS");
 			balance -= amt;
 			if(accnumber != toAccNum)
 			{
@@ -40,6 +42,8 @@ public class TransactionService {
 			accRepo.save(acc);
 		}
 		trans.setAcc_no(acc);
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+		trans.setTimestamp(timeStamp);
 		return transRepo.save(trans);
 	}
 }

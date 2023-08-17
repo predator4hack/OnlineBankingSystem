@@ -3,6 +3,8 @@ package com.bank.Banking.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Account {
 	@Id
@@ -13,6 +15,7 @@ public class Account {
 	private String ifsc;
 	private String branch;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private Customer user;

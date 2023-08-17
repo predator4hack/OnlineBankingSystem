@@ -1,13 +1,17 @@
 package com.bank.Banking.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.Banking.model.Account;
+import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.AccountService;
 
 @RestController
@@ -26,6 +30,13 @@ public class AccountController {
 			result = "Account created!";
 		else
 			result = "Account creation failed!";
+		return result;
+	}
+	
+	@GetMapping("/fetchTransactions/{accno}")
+	public List<Transaction> fetchTransactions(@PathVariable("accno") long accno)
+	{
+		List<Transaction> result = accService.fetchTransactions(accno);
 		return result;
 	}
 }

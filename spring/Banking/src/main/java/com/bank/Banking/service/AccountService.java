@@ -5,8 +5,12 @@ import org.springframework.stereotype.Service;
 
 import com.bank.Banking.dao.AccRepository;
 import com.bank.Banking.dao.CustomerRepository;
+import com.bank.Banking.dao.TransactionRepository;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
+import com.bank.Banking.model.Transaction;
+
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.text.AbstractDocument.BranchElement;
@@ -18,6 +22,9 @@ public class AccountService {
 	
 	@Autowired
 	CustomerRepository custRepo;
+	
+	@Autowired
+	TransactionRepository transRepo;
 	
 	public Account createAccount(Account account, String userid) {
 		long generatedNumber = 0;
@@ -34,5 +41,9 @@ public class AccountService {
 		account.setAccno(generatedNumber);
 		account.setIfsc(ifsc);
 		return accRepo.save(account);
+	}
+	
+	public List<Transaction> fetchTransactions(long accno) {
+		return transRepo.findByAccountNumber(accno);
 	}
 }
