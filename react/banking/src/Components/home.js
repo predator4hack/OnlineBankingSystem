@@ -1,24 +1,17 @@
 import React, {useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import {Button, Form, FormGroup, Input, Label, Row, Col, Card, CardBody, CardHeader} from 'reactstrap';
+import {Button, Form, FormGroup, Input, Label, Row, Col, Card, CardBody, CardHeader, CardFooter} from 'reactstrap';
 
 const Home = () => {
     const navigate = useNavigate();
     const username = sessionStorage.getItem("UserID");
     const [accounts, setAccounts] = useState([]);
     const fetchURL = "http://localhost:9080/fetchAccounts/" + username;
-    
-    const newAccountGeneration = () => {
-        navigate("/newAccount");
-    }
 
-    const LoginHandler = () => {
+    const logoutHandler = () => {
+        sessionStorage.clear();
         navigate("/login");
-    }
-
-    const SignupHandler = () => {
-        navigate("/signup");
     }
 
     const fetchAccounts = () => {
@@ -36,22 +29,46 @@ const Home = () => {
     return(
         <div>
             {username != null && 
-            <div className="container">
-                <h2>Hi, {username}!</h2>
-                <h3>Account List</h3>
-                <ul>
-                {accounts.map((account) => (
-                    <li>{account}</li>
-                ))}
-                </ul>
-                <Button onClick={() => newAccountGeneration()} color="primary">Create New Account</Button>
+            <div className="container mt-4 mb-4">
+                <Row className="row justify-content-center">
+                    <Col className="col-md-8">
+                        <Card>
+                            <CardHeader>
+                                <h2>Hi, {username}!</h2>
+                            </CardHeader>
+                            <CardBody>
+                                <h3>Account List</h3>
+                                <ul>
+                                {accounts.map((account) => (
+                                    <li>{account.accno} - Rs. {account.balance}</li>
+                                ))}
+                                </ul>
+                            </CardBody>
+                            <CardFooter>
+                                <Link to="/newAccount"><Button color="primary">Create New Account</Button></Link>
+                                <Link to="/withdraw"><Button color="warning">Withdraw Funds</Button></Link>
+                                <Button onClick={() => logoutHandler()} color="danger">Logout</Button>
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
             }
             {username == null && 
             <div className="container">
-                <h2>Hi, you are not logged in!</h2>
-                <Button onClick={() => LoginHandler()} color="primary">Login</Button>
-                <Button onClick={() => SignupHandler()} color="primary">Signup</Button>
+                <Row className="row justify-content-center">
+                    <Col className="col-md-8">
+                        <Card>
+                            <CardHeader>
+                                <h2>Hi, you are not logged in!</h2>
+                            </CardHeader>
+                            <CardFooter>
+                                <Link to="/login"><Button color="primary">Login</Button></Link>
+                                <Link to="/signup"><Button color="warning">Signup</Button></Link>
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
             }
         </div>

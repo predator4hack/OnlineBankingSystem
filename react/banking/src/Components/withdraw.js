@@ -1,40 +1,48 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import {Button, Form, FormGroup, Input, Label, Row, Col, Card, CardBody, CardHeader, CardFooter} from 'reactstrap';
 
-const AccountCreate = () => {
+const Withdraw = () => {
     const navigate = useNavigate();
     const userid = sessionStorage.getItem("UserID");
-    const [accType, setAccType] = useState("");
-    const tempDate = new Date();
-    const openingDate = tempDate.getDate() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getFullYear(); 
-    const [branch, setBranch] = useState("");
-    const [balance, setBalance] = useState(1000);
-    const baseURL = "http://localhost:9080/createAccount/" + userid;
+    const [accounts, setAccounts] = useState([]);
+    const [amount, setAmount] = useState(0.0);
+    const [accno, setAccno] = useState("");
+    const fetchURL = "http://localhost:9080/fetchAccounts/" + userid;
+    const baseURL = "http://localhost:9080/transact";
 
-    const accTypeChangeHandler = (event) => {
-        setAccType(event.target.value);
+    const fetchAccounts = () => {
+        axios.get(fetchURL).then((response) => {
+            setAccounts(response.data);
+            setAccno(response.data[0].accno);
+        }).catch(error => {
+            alert('Error fetching the accounts!');
+        })
     }
 
-    const branchChangeHandler = (event) => {
-        setBranch(event.target.value);
+    useEffect(() => {
+        fetchAccounts();
+    }, []);
+
+    const amountChangeHandler = (event) => {
+        setAmount(event.target.value);
     }
 
-    const balanceChangeHandler = (event) => {
-        setBalance(event.target.value);
+    const accnoChangeHandler = (event) => {
+        setAccno(event.target.value);
     }
 
     const submitActionHandler = (event) => {
         event.preventDefault();
         axios.post(baseURL, {
-            acctype: accType,
-            balance: balance,
-            openingDate: openingDate,
-            branch: branch
+            accFrom: accno,
+            accTo: accno,
+            amount: amount,
+            transType: "withdraw"
         })
         .then((response) => {
-            alert("Account created!");
+            alert(response.data);
             navigate("/");
         }).catch(error => {
             alert("error == " + error);
@@ -42,9 +50,8 @@ const AccountCreate = () => {
     }
 
     const cancelHandler =() =>  {
-        setAccType("");
-        setBalance(1000);
-        setBranch("");
+        setAmount(0);
+        setAccno("");
     }
 
     return(
@@ -72,7 +79,7 @@ const AccountCreate = () => {
                     <Col className="col-md-8">
                         <Card>
                             <CardHeader>
-                                <h2>Create Account</h2>
+                                <h2>Withdraw Funds</h2>
                             </CardHeader>
                             <CardBody>
                                 <Form onSubmit={submitActionHandler} className="form">  
@@ -81,22 +88,20 @@ const AccountCreate = () => {
                                         <Input value={userid} disabled></Input>
                                     </FormGroup>                 
                                     <FormGroup>
-                                        <Label>Account Type</Label>
-                                        <Input type="text" value={accType} onChange={accTypeChangeHandler} placeholder="Enter account type" required></Input>
+                                        <Label>Account Number</Label>
+                                        <select id="account" value={accno} onChange={accnoChangeHandler}>
+                                            {accounts.map((account) => (
+                                            <option key={account.accno} value={account.accno}>
+                                                {account.accno}
+                                            </option>
+                                            ))}
+                                        </select>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label>Balance</Label>
-                                        <Input type="number" value={balance} onChange={balanceChangeHandler} placeholder="Enter balance" required></Input>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>Date of Opening</Label>
-                                        <Input type="text" value={openingDate} disabled></Input>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>Branch</Label>
-                                        <Input type="text" value={branch} onChange={branchChangeHandler} placeholder="Enter branch" required></Input>
-                                    </FormGroup>
-                                    <Button type="submit" color="primary">Create Account</Button>
+                                        <Label>Amount</Label>
+                                        <Input type="number" value={amount} onChange={amountChangeHandler} placeholder="Enter amount" required></Input>
+                                    </FormGroup>      
+                                    <Button type="submit" color="primary">Withdraw</Button>
                                     <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
                                 </Form>
                             </CardBody>
@@ -109,4 +114,4 @@ const AccountCreate = () => {
     );
 }
 
-export default AccountCreate;
+export default Withdraw;

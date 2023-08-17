@@ -6,6 +6,7 @@ import Login from './Components/login';
 import Home from './Components/home';
 import React, { Component }  from 'react';
 import AccountCreate from './Components/accountCreate';
+import Withdraw from './Components/withdraw';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<AddCustomer/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/newAccount" element={<AccountCreate/>}/>
+        <Route path="/withdraw" element={<Withdraw/>}/>
       </Routes>
     </BrowserRouter>
   );
