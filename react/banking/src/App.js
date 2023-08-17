@@ -7,6 +7,8 @@ import Home from './Components/home';
 import React, { Component }  from 'react';
 import AccountCreate from './Components/accountCreate';
 import Withdraw from './Components/withdraw';
+import FundTransfer from './Components/fundTransfer';
+import TransactionHistory from './Components/transactionHistory';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/newAccount" element={<AccountCreate/>}/>
         <Route path="/withdraw" element={<Withdraw/>}/>
+        <Route path="/fundtransfer" element={<FundTransfer/>}/>
+        <Route path="/transactionHistory/:accno" element={<TransactionHistory/>}/>
       </Routes>
     </BrowserRouter>
   );

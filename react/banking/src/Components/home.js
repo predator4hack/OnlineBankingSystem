@@ -39,14 +39,19 @@ const Home = () => {
                             <CardBody>
                                 <h3>Account List</h3>
                                 <ul>
-                                {accounts.map((account) => (
-                                    <li>{account.accno} - Rs. {account.balance}</li>
-                                ))}
+                                    {accounts.map((account) => (
+                                    <li key={account.accno}>
+                                        <Link to={`/transactionHistory/${account.accno}`}>
+                                        {account.accno}
+                                        </Link> - Rs. {account.balance}
+                                    </li>
+                                    ))}
                                 </ul>
                             </CardBody>
                             <CardFooter>
                                 <Link to="/newAccount"><Button color="primary">Create New Account</Button></Link>
                                 <Link to="/withdraw"><Button color="warning">Withdraw Funds</Button></Link>
+                                <Link to="/fundtransfer"><Button color="secondary">Transfer Funds</Button></Link>
                                 <Button onClick={() => logoutHandler()} color="danger">Logout</Button>
                             </CardFooter>
                         </Card>

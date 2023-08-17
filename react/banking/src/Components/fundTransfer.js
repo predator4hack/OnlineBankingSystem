@@ -3,12 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import {Button, Form, FormGroup, Input, Label, Row, Col, Card, CardBody, CardHeader, CardFooter} from 'reactstrap';
 
-const Withdraw = () => {
+const FundTransfer = () => {
     const navigate = useNavigate();
     const userid = sessionStorage.getItem("UserID");
     const [accounts, setAccounts] = useState([]);
     const [amount, setAmount] = useState(0.0);
     const [accno, setAccno] = useState(0);
+    const [accto, setAccto] = useState(0);
     const fetchURL = "http://localhost:9080/fetchAccounts/" + userid;
     const baseURL = "http://localhost:9080/transact";
 
@@ -33,13 +34,17 @@ const Withdraw = () => {
         setAccno(event.target.value);
     }
 
+    const acctoChangeHandler = (event) => {
+        setAccto(event.target.value);
+    }
+
     const submitActionHandler = (event) => {
         event.preventDefault();
         axios.post(baseURL, {
             accFrom: accno,
-            accTo: accno,
+            accTo: accto,
             amount: amount,
-            transType: "withdraw"
+            transType: "transfer"
         })
         .then((response) => {
             alert(response.data);
@@ -52,6 +57,7 @@ const Withdraw = () => {
     const cancelHandler =() =>  {
         setAmount(0);
         setAccno(0);
+        setAccto(0);
     }
 
     return(
@@ -98,10 +104,14 @@ const Withdraw = () => {
                                         </select>
                                     </FormGroup>
                                     <FormGroup>
+                                        <Label>Receiver's Account Number</Label>
+                                        <Input type="number" value={accto} onChange={acctoChangeHandler} placeholder="Enter receiver's account number" required></Input>
+                                    </FormGroup> 
+                                    <FormGroup>
                                         <Label>Amount</Label>
                                         <Input type="number" value={amount} onChange={amountChangeHandler} placeholder="Enter amount" required></Input>
                                     </FormGroup>      
-                                    <Button type="submit" color="primary">Withdraw</Button>
+                                    <Button type="submit" color="primary">Transfer Funds</Button>
                                     <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
                                 </Form>
                             </CardBody>
@@ -114,4 +124,4 @@ const Withdraw = () => {
     );
 }
 
-export default Withdraw;
+export default FundTransfer;
