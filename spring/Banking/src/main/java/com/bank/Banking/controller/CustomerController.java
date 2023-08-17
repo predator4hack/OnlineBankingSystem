@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
 import com.bank.Banking.service.CustomerService;
@@ -32,9 +33,9 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/fetchAccounts/{username}")
-	public List<Long> fetchAccounts(@PathVariable("username") String username)
+	public List<Account> fetchAccounts(@PathVariable("username") String username)
 	{
-		List<Long> acc = custService.fetchAccounts(username);
+		List<Account> acc = custService.fetchAccounts(username);
 		return acc;
 	}
 }

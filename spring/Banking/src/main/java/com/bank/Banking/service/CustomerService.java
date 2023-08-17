@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bank.Banking.dao.AccRepository;
 import com.bank.Banking.dao.CustomerRepository;
+import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
 import java.util.List;
@@ -63,7 +64,7 @@ public class CustomerService {
 		return result;
 	}
 	
-	public List<Long> fetchAccounts(String username)
+	public List<Account> fetchAccounts(String username)
 	{
 		return accRepo.findByUsername(username);
 	}

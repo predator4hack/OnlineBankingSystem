@@ -11,6 +11,6 @@ import com.bank.Banking.model.Account;
 
 @Repository
 public interface AccRepository extends JpaRepository<Account, Long> {
-	@Query("select account.accno from Account account where account.user.userId=?1")
-	public List<Long> findByUsername(String username);
+	@Query("select account from Account account where account.user.userId=?1")
+	public List<Account> findByUsername(String username);
 }
