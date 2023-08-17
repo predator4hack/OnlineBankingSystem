@@ -39,4 +39,10 @@ public class AccountController {
 		List<Transaction> result = accService.fetchTransactions(accno);
 		return result;
 	}
+	
+	@GetMapping("/getAccountDetails/{accno}")
+	public Account getAccountDetails(@PathVariable("accno") long accno)
+	{
+		return accService.getAccountDetails(accno);
+	}
 }

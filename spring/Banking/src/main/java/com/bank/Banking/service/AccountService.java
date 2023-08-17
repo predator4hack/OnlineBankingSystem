@@ -44,6 +44,10 @@ public class AccountService {
 	}
 	
 	public List<Transaction> fetchTransactions(long accno) {
-		return transRepo.findByAccountNumber(accno);
+		return transRepo.findByAccountNumber(accno, "SUCCESS");
+	}
+	
+	public Account getAccountDetails(long accno) {
+		return accRepo.findById(accno).get();
 	}
 }
