@@ -9,6 +9,9 @@ public class Account {
 	private long accno;
 	private String acctype;
 	private double balance;
+	private String openingDate;
+	private String ifsc;
+	private String branch;
 	
 	@ManyToOne
 	@JoinColumn(name="userId")
@@ -48,4 +51,24 @@ public class Account {
 	public void setTransaction(List<Transaction> transaction) {
 		this.transaction = transaction;
 	}
+	public String getOpeningDate() {
+		return openingDate;
+	}
+	public void setOpeningDate(String openingDate) {
+		this.openingDate = openingDate;
+	}
+	public String getIfsc() {
+		return ifsc;
+	}
+	public void setIfsc(String ifsc) {
+		this.ifsc = ifsc;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	
+	
 }
