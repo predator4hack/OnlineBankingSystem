@@ -7,18 +7,31 @@ const AccountCreate = () => {
     const navigate = useNavigate();
     const userid = sessionStorage.getItem("UserID");
     const [accType, setAccType] = useState("");
-    const balance = 0; 
+    const tempDate = new Date();
+    const openingDate = tempDate.getDate() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getFullYear(); 
+    const [branch, setBranch] = useState("");
+    const [balance, setBalance] = useState(1000);
     const baseURL = "http://localhost:9080/createAccount/" + userid;
 
     const accTypeChangeHandler = (event) => {
         setAccType(event.target.value);
     }
 
+    const branchChangeHandler = (event) => {
+        setBranch(event.target.value);
+    }
+
+    const balanceChangeHandler = (event) => {
+        setBalance(event.target.value);
+    }
+
     const submitActionHandler = (event) => {
         event.preventDefault();
         axios.post(baseURL, {
             accType: accType,
-            balance: balance
+            balance: balance,
+            openingDate: openingDate,
+            branch: branch
         })
         .then((response) => {
             alert("Account created!");
@@ -67,6 +80,18 @@ const AccountCreate = () => {
                                     <FormGroup>
                                         <Label>Account Type</Label>
                                         <Input type="text" value={accType} onChange={accTypeChangeHandler} placeholder="Enter account type" required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Balance</Label>
+                                        <Input type="number" value={balance} onChange={balanceChangeHandler} placeholder="Enter balance" required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Date of Opening</Label>
+                                        <Input type="text" value={openingDate} disabled></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Branch</Label>
+                                        <Input type="text" value={branch} onChange={branchChangeHandler} placeholder="Enter branch" required></Input>
                                     </FormGroup>
                                     <Button type="submit" color="primary">Create Account</Button>
                                     <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>

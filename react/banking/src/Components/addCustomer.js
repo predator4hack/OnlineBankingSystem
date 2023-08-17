@@ -137,7 +137,7 @@ const AddCustomer = () => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>DOB</Label>
-                                    <Input type="text" value={dob} onChange={dobChangeHandler} placeholder="Enter DOB" required></Input>
+                                    <Input type="date" value={dob} onChange={dobChangeHandler} placeholder="Enter DOB" required></Input>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>Father Name</Label>
