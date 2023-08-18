@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -37,5 +38,11 @@ public class CustomerController {
 	{
 		List<Account> acc = custService.fetchAccounts(username);
 		return acc;
+	}
+	
+	@PutMapping("/changePassword/{otp}")
+	public String changePassword(@RequestBody LoginModel u, @PathVariable("otp") String otp)
+	{
+		return custService.changePassword(u, otp);
 	}
 }

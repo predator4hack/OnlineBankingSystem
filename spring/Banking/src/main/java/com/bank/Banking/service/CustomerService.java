@@ -68,4 +68,26 @@ public class CustomerService {
 	{
 		return accRepo.findByUsername(username);
 	}
+	
+	public String changePassword(LoginModel u, String otp)
+	{
+		String result = "";
+		Customer cust = null;
+		Optional<Customer> obj = custRepo.findById(u.getUserId());
+		if(obj.isPresent())
+			cust = obj.get();
+		if(cust == null)
+			result = "Invalid customer";
+		else {
+			if(otp.equals("111111"))
+			{
+				cust.setPassword(u.getPassword());
+				custRepo.save(cust);
+				result = "Success!";
+			}
+			else
+				result = "Invalid OTP";
+		}
+		return result;
+	}
 }
