@@ -8,7 +8,9 @@ import React, { Component }  from 'react';
 import AccountCreate from './Components/accountCreate';
 import Withdraw from './Components/withdraw';
 import FundTransfer from './Components/fundTransfer';
+import AccountDetails from './Components/accountDetails';
 import TransactionHistory from './Components/transactionHistory';
+import ChangePassword from './Components/changePassword';
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
         <Route path="/newAccount" element={<AccountCreate/>}/>
         <Route path="/withdraw" element={<Withdraw/>}/>
         <Route path="/fundtransfer" element={<FundTransfer/>}/>
+        <Route path="/accountDetails/:accno" element={<AccountDetails/>}/>
         <Route path="/transactionHistory/:accno" element={<TransactionHistory/>}/>
+        <Route path="/changePassword" element={<ChangePassword/>}/>
       </Routes>
     </BrowserRouter>
   );

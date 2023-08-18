@@ -156,7 +156,7 @@ const AddCustomer = () => {
                                     <Input type="text" value={permadd} onChange={permaddChangeHandler} placeholder="Enter permanent address" required></Input>
                                 </FormGroup>
                                 <Button type="submit" color="primary">Sign Up</Button>
-                                <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
+                                <Button color="danger" onClick={() => cancelHandler()}>Cancel</Button>
                             </Form>
                         </CardBody>
                     </Card>

@@ -6,12 +6,14 @@ import {Button, Form, FormGroup, Input, Label, Row, Col, Card, CardBody, CardHea
 const AccountCreate = () => {
     const navigate = useNavigate();
     const userid = sessionStorage.getItem("UserID");
-    const [accType, setAccType] = useState("");
+    const [accType, setAccType] = useState("Savings");
     const tempDate = new Date();
     const openingDate = tempDate.getDate() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getFullYear(); 
-    const [branch, setBranch] = useState("");
+    const [branch, setBranch] = useState("Bangalore");
     const [balance, setBalance] = useState(1000);
     const baseURL = "http://localhost:9080/createAccount/" + userid;
+    const typeOptions = ['Savings', 'Salary', 'Checking'];
+    const branchOptions = ['Bangalore', 'Hyderabad', 'Chennai', 'Mumbai', 'Delhi', 'Kolkata', 'Pune'];
 
     const accTypeChangeHandler = (event) => {
         setAccType(event.target.value);
@@ -42,9 +44,9 @@ const AccountCreate = () => {
     }
 
     const cancelHandler =() =>  {
-        setAccType("");
+        setAccType("Savings");
         setBalance(1000);
-        setBranch("");
+        setBranch("Bangalore");
     }
 
     return(
@@ -82,7 +84,13 @@ const AccountCreate = () => {
                                     </FormGroup>                 
                                     <FormGroup>
                                         <Label>Account Type</Label>
-                                        <Input type="text" value={accType} onChange={accTypeChangeHandler} placeholder="Enter account type" required></Input>
+                                        <select id="accType" value={accType} onChange={accTypeChangeHandler}>
+                                            {typeOptions.map((op) => (
+                                            <option key={op} value={op}>
+                                                {op}
+                                            </option>
+                                            ))}
+                                        </select>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>Balance</Label>
@@ -94,10 +102,16 @@ const AccountCreate = () => {
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>Branch</Label>
-                                        <Input type="text" value={branch} onChange={branchChangeHandler} placeholder="Enter branch" required></Input>
+                                        <select id="branch" value={branch} onChange={branchChangeHandler}>
+                                            {branchOptions.map((op) => (
+                                            <option key={op} value={op}>
+                                                {op}
+                                            </option>
+                                            ))}
+                                        </select>
                                     </FormGroup>
                                     <Button type="submit" color="primary">Create Account</Button>
-                                    <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
+                                    <Button color="danger" onClick={() => cancelHandler()}>Cancel</Button>
                                 </Form>
                             </CardBody>
                         </Card>

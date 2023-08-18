@@ -10,6 +10,8 @@ const FundTransfer = () => {
     const [amount, setAmount] = useState(0.0);
     const [accno, setAccno] = useState(0);
     const [accto, setAccto] = useState(0);
+    const [transType, setTransType] = useState('IMPS');
+    const types = ['IMPS', 'NEFT', 'RTGS'];
     const fetchURL = "http://localhost:9080/fetchAccounts/" + userid;
     const baseURL = "http://localhost:9080/transact";
 
@@ -38,13 +40,17 @@ const FundTransfer = () => {
         setAccto(event.target.value);
     }
 
+    const transTypeChangeHandler = (event) => {
+        setTransType(event.target.value);
+    }
+
     const submitActionHandler = (event) => {
         event.preventDefault();
         axios.post(baseURL, {
             accFrom: accno,
             accTo: accto,
             amount: amount,
-            transType: "transfer"
+            transType: transType
         })
         .then((response) => {
             alert(response.data);
@@ -56,8 +62,9 @@ const FundTransfer = () => {
 
     const cancelHandler =() =>  {
         setAmount(0);
-        setAccno(0);
+        setAccno(accounts[0]);
         setAccto(0);
+        setTransType("IMPS");
     }
 
     return(
@@ -104,6 +111,16 @@ const FundTransfer = () => {
                                         </select>
                                     </FormGroup>
                                     <FormGroup>
+                                        <Label>Select Transaction Type</Label>
+                                        <select id="transType" value={transType} onChange={transTypeChangeHandler}>
+                                            {types.map((trans) => (
+                                            <option key={trans} value={trans}>
+                                                {trans}
+                                            </option>
+                                            ))}
+                                        </select>
+                                    </FormGroup>
+                                    <FormGroup>
                                         <Label>Receiver's Account Number</Label>
                                         <Input type="number" value={accto} onChange={acctoChangeHandler} placeholder="Enter receiver's account number" required></Input>
                                     </FormGroup> 
@@ -112,7 +129,7 @@ const FundTransfer = () => {
                                         <Input type="number" value={amount} onChange={amountChangeHandler} placeholder="Enter amount" required></Input>
                                     </FormGroup>      
                                     <Button type="submit" color="primary">Transfer Funds</Button>
-                                    <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
+                                    <Button color="danger" onClick={() => cancelHandler()}>Cancel</Button>
                                 </Form>
                             </CardBody>
                         </Card>

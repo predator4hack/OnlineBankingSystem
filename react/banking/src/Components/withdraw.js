@@ -51,7 +51,7 @@ const Withdraw = () => {
 
     const cancelHandler =() =>  {
         setAmount(0);
-        setAccno(0);
+        setAccno(accounts[0]);
     }
 
     return(
@@ -102,7 +102,7 @@ const Withdraw = () => {
                                         <Input type="number" value={amount} onChange={amountChangeHandler} placeholder="Enter amount" required></Input>
                                     </FormGroup>      
                                     <Button type="submit" color="primary">Withdraw</Button>
-                                    <Button type="submit" color="danger" onClick={() => cancelHandler()}>Cancel</Button>
+                                    <Button color="danger" onClick={() => cancelHandler()}>Cancel</Button>
                                 </Form>
                             </CardBody>
                         </Card>

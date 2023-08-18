@@ -3,27 +3,38 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import axios from "axios";
 import {Button, Table, Row, Col, Card, CardBody, CardHeader, CardFooter} from 'reactstrap';
 
-const TransactionHistory = () => {
+const AccountDetails = () => {
     const navigate = useNavigate();
     const username = sessionStorage.getItem("UserID");    
     const { accno } = useParams();
+    const [account, setAccount] = useState(0);
     const [transactions, setTransactions] = useState([]);
-    const fetchURL = "http://localhost:9080/fetchTransactions/" + accno;
+    const fetchURL = "http://localhost:9080/getAccountDetails/" + accno;
+    const transFetchURL = "http://localhost:9080/fetchTransactions/" + accno;
 
     const logoutHandler = () => {
         sessionStorage.clear();
         navigate("/login");
     }
 
-    const fetchTransactions = () => {
+    const fetchAccountDetails = () => {
         axios.get(fetchURL).then((response) => {
-            setTransactions(response.data.reverse());
+            setAccount(response.data);
         }).catch(error => {
-            alert('Error fetching the transactions!');
+            alert('Error fetching the account details');
+        })
+    }
+
+    const fetchTransactions = () => {
+        axios.get(transFetchURL).then((response) => {
+            setTransactions(response.data.slice(-3).reverse());
+        }).catch(error => {
+            alert('Error fetching the account summary');
         })
     }
 
     useEffect(() => {
+        fetchAccountDetails();
         fetchTransactions();
     }, []);
     
@@ -35,9 +46,16 @@ const TransactionHistory = () => {
                     <Col className="col-md-8">
                         <Card>
                             <CardHeader>
-                                <h2>Transactions for {accno}</h2>
+                                <h2>Account Number - {accno}</h2>
                             </CardHeader>
                             <CardBody>
+                                <h4>Balance - Rs. {account.balance}</h4>
+                                <h4>Account Type - {account.acctype}</h4>
+                                <h4>Branch - {account.branch}</h4>
+                                <h4>IFSC Code - {account.ifsc}</h4>
+                                <Link to={`/transactionHistory/${accno}`}><Button>See Transaction History</Button></Link>
+
+                                <h3 className="justify-content-center mt-2">Account Summary</h3>
                                 <Table>
                                     <thead>
                                         <tr>
@@ -94,4 +112,4 @@ const TransactionHistory = () => {
     )
 }
 
-export default TransactionHistory;
+export default AccountDetails;

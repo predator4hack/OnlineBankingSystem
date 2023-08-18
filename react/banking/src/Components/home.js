@@ -41,9 +41,10 @@ const Home = () => {
                                 <ul>
                                     {accounts.map((account) => (
                                     <li key={account.accno}>
-                                        <Link to={`/transactionHistory/${account.accno}`}>
+                                        <Link to={`/accountDetails/${account.accno}`}>
                                         {account.accno}
-                                        </Link> - Rs. {account.balance}
+                                        </Link> 
+                                        - Rs. {account.balance}
                                     </li>
                                     ))}
                                 </ul>
