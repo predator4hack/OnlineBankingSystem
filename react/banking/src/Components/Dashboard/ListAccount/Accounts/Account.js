@@ -81,6 +81,7 @@ const StatusIndicator = styled.div`
 const Account = ({ data }) => {
     const { accno, acctype, balance, openingDate, ifsc, branch } = data;
     const activeContext = useContext(ActiveContext);
+    console.log("Active context: ", activeContext);
     const navigate = useNavigate();
     return (
         <Container onClick={() => activeContext.actDispatch(accno)}>

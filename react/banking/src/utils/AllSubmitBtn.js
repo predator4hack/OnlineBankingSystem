@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -27,10 +28,15 @@ const Button = styled.a`
     }
 `;
 
-const AllSubmitBtn = ({ title }) => (
-    <Container>
-        <Button type="submit">All {title}</Button>
-    </Container>
-);
+const AllSubmitBtn = ({ title, to }) => {
+    const navigate = useNavigate();
+    return (
+        <Container>
+            <Button type="submit" onClick={() => navigate(to)}>
+                All {title}
+            </Button>
+        </Container>
+    );
+};
 
 export default AllSubmitBtn;

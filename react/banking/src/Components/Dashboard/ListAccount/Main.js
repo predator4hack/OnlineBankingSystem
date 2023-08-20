@@ -62,10 +62,12 @@ const Main = () => {
         }
         fetchTransactions();
     }, [selectedAccount, activeAcc]);
-
     return (
         <ActiveContext.Provider
-            value={{ actAccount: activeAcc, actDispatch: dispatch }}
+            value={{
+                actAccount: activeAcc ? activeAcc : selectedAccount,
+                actDispatch: dispatch,
+            }}
         >
             <Container>
                 <Nav />

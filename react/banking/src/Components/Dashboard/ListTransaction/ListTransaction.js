@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import SortingBar from "./SortingBar";
 import Transaction from "./Transaction";
 import AllSubmitBtn from "../../../utils/AllSubmitBtn";
 import styled from "styled-components";
+import { ActiveContext } from "../ListAccount/Main";
 
 const Container = styled.div``;
 
@@ -29,6 +30,7 @@ const TransactionsCount = styled.div`
 `;
 
 const ListTransaction = ({ title, data, count }) => {
+    const activeContext = useContext(ActiveContext);
     return (
         <Container>
             <Title>
@@ -42,7 +44,10 @@ const ListTransaction = ({ title, data, count }) => {
                     key={transaction.transactionId}
                 />
             ))}
-            <AllSubmitBtn title={title} />
+            <AllSubmitBtn
+                title={title}
+                to={`/accountDashboard/${activeContext.actAccount}`}
+            />
         </Container>
     );
 };

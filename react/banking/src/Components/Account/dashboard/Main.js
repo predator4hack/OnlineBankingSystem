@@ -2,12 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import ListTransaction from "./ListTransaction/ListTransaction";
 
 const Main = () => {
     const baseURL = "http://localhost:9080";
     const { accno } = useParams();
     const userId = sessionStorage.getItem("userID");
+    const [tdata, setTdata] = useState([]);
     const [accData, setAccData] = useState({});
+    const [dates, setDates] = useState({
+        startDate: "",
+        endDate: "",
+    });
+
     useEffect(() => {
         async function fetchAccountData() {
             try {
@@ -22,6 +29,26 @@ const Main = () => {
         }
         fetchAccountData();
     }, []);
+    useEffect(() => {
+        async function fetchTransactions() {
+            try {
+                var res;
+                if (dates.startDate === "" || dates.endDate === "")
+                    res = await axios.get(
+                        `${baseURL}/fetchTransactions/${accno}`
+                    );
+                else
+                    res = await axios.post(
+                        `${baseURL}/accountStatement/${accno}`,
+                        dates
+                    );
+                setTdata(res.data);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchTransactions();
+    }, [dates]);
     return (
         <Container>
             <Title>
@@ -77,6 +104,13 @@ const Main = () => {
                     </Value>
                 </Text>
             </Wrapper>
+            <ListTransaction
+                title="Transactions"
+                count={tdata.length}
+                data={tdata}
+                val={dates}
+                setVal={setDates}
+            />
         </Container>
     );
 };
