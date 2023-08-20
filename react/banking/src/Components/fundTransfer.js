@@ -92,7 +92,7 @@ const FundTransfer = () => {
                     <Col className="col-md-8">
                         <Card>
                             <CardHeader>
-                                <h2>Withdraw Funds</h2>
+                                <h2>Transfer Funds</h2>
                             </CardHeader>
                             <CardBody>
                                 <Form onSubmit={submitActionHandler} className="form">  

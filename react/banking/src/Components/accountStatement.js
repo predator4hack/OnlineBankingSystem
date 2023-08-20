@@ -3,40 +3,39 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import axios from "axios";
 import {Button, Table, Row, Col, Card, CardBody, CardHeader, CardFooter, Form, FormGroup, Input, Label} from 'reactstrap';
 
-const AccountDetails = () => {
+const AccountStatement = () => {
     const navigate = useNavigate();
     const username = sessionStorage.getItem("UserID");    
     const { accno } = useParams();
-    const [account, setAccount] = useState(0);
     const [transactions, setTransactions] = useState([]);
-    const fetchURL = "http://localhost:9080/getAccountDetails/" + accno;
-    const transFetchURL = "http://localhost:9080/fetchTransactions/" + accno;
+    const baseURL = "http://localhost:9080/accountStatement/" + accno;
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
     const logoutHandler = () => {
         sessionStorage.clear();
         navigate("/login");
     }
 
-    const fetchAccountDetails = () => {
-        axios.get(fetchURL).then((response) => {
-            setAccount(response.data);
-        }).catch(error => {
-            alert('Error fetching the account details');
-        })
+    const startDateChangeHandler = (event) => {
+        setStartDate(event.target.value);
     }
 
-    const fetchTransactions = () => {
-        axios.get(transFetchURL).then((response) => {
-            setTransactions(response.data.slice(-3).reverse());
-        }).catch(error => {
-            alert('Error fetching the account summary');
-        })
+    const endDateChangeHandler = (event) => {
+        setEndDate(event.target.value);
     }
 
-    useEffect(() => {
-        fetchAccountDetails();
-        fetchTransactions();
-    }, []);
+    const submitActionHandler = (event) => {
+        event.preventDefault();
+        axios.post(baseURL, {
+            startDate: startDate,
+            endDate: endDate
+        }).then((response) => {
+            setTransactions(response.data.reverse());
+        }).catch(error => {
+            alert('Error fetching the account statement');
+        })
+    }
     
     return(
         <div>
@@ -46,17 +45,20 @@ const AccountDetails = () => {
                     <Col className="col-md-8">
                         <Card>
                             <CardHeader>
-                                <h2>Account Number - {accno}</h2>
+                                <h2>Account Summary for {accno}</h2>
                             </CardHeader>
                             <CardBody>
-                                <h4>Balance - Rs. {account.balance}</h4>
-                                <h4>Account Type - {account.acctype}</h4>
-                                <h4>Branch - {account.branch}</h4>
-                                <h4>IFSC Code - {account.ifsc}</h4>
-                                <Link to={`/transactionHistory/${accno}`}><Button color="primary">See Transaction History</Button></Link>
-                                <Link to={`/accountStatement/${accno}`}><Button color="warning">See Account Statement</Button></Link>
-                                <hr my-2></hr>
-                                <h3 className="justify-content-center mt-2">Account Summary</h3>
+                            <Form onSubmit={submitActionHandler} className="form">
+                                    <FormGroup>
+                                        <Label>Start Date</Label>
+                                        <Input type="date" value={startDate} onChange={startDateChangeHandler} required></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>End Date</Label>
+                                        <Input type="date" value={endDate} onChange={endDateChangeHandler} required></Input>
+                                    </FormGroup>
+                                    <Button type="submit" color="primary">See Account Statement</Button>
+                                </Form>
                                 <Table>
                                     <thead>
                                         <tr>
@@ -113,4 +115,4 @@ const AccountDetails = () => {
     )
 }
 
-export default AccountDetails;
+export default AccountStatement;

@@ -11,6 +11,7 @@ import FundTransfer from './Components/fundTransfer';
 import AccountDetails from './Components/accountDetails';
 import TransactionHistory from './Components/transactionHistory';
 import ChangePassword from './Components/changePassword';
+import AccountStatement from './Components/accountStatement';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/accountDetails/:accno" element={<AccountDetails/>}/>
         <Route path="/transactionHistory/:accno" element={<TransactionHistory/>}/>
         <Route path="/changePassword" element={<ChangePassword/>}/>
+        <Route path="/accountStatement/:accno" element={<AccountStatement/>}/>
       </Routes>
     </BrowserRouter>
   );
