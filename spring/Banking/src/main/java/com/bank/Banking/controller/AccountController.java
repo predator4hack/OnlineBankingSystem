@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.Banking.model.Account;
+import com.bank.Banking.model.AccountStatement;
 import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.AccountService;
 
@@ -44,5 +45,11 @@ public class AccountController {
 	public Account getAccountDetails(@PathVariable("accno") long accno)
 	{
 		return accService.getAccountDetails(accno);
+	}
+	
+	@PostMapping("/accountStatement/{accno}")
+	public List<Transaction> accountStatement(@RequestBody AccountStatement accStat, @PathVariable("accno") long accno)
+	{
+		return accService.accountStatement(accno, accStat);
 	}
 }
