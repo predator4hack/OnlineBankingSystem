@@ -90,4 +90,9 @@ public class CustomerService {
 		}
 		return result;
 	}
+	
+	public Customer fetchUser(String userid)
+	{
+		return custRepo.findById(userid).get();
+	}
 }

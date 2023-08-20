@@ -45,4 +45,10 @@ public class CustomerController {
 	{
 		return custService.changePassword(u, otp);
 	}
+	
+	@GetMapping("/fetchUser/{userid}")
+	public Customer fetchUser(@PathVariable("userid") String userid)
+	{
+		return custService.fetchUser(userid);
+	}
 }
