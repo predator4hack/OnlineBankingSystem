@@ -15,6 +15,7 @@ import CreateAccount from "./Components/Account/createAccount/CreateAccount";
 import AccountDashboard from "./Components/Account/dashboard/AccountDashboard";
 import TransactionDashboard from "./Components/Transaction/TransDashboard/TransactionDashboard";
 import CreateTransaction from "./Components/Transaction/CreateTransaction/CreateTransaction";
+import Withdraw from "./Components/Transaction/Withdraw/Withdraw";
 import Layout from "./utils/Layout";
 import Home from "./Components/Home/Home";
 import Offers from "./Components/Offers/Offers";
@@ -104,6 +105,14 @@ function App() {
                         Component={() => (
                             <Layout>
                                 <CreateTransaction />
+                            </Layout>
+                        )}
+                    />
+                    <Route
+                        path="/withdraw"
+                        Component={() => (
+                            <Layout>
+                                <Withdraw />
                             </Layout>
                         )}
                     />

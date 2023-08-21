@@ -33,11 +33,18 @@ const Menu = () => {
                 to="/offers"
             />
             <MenuLink
-                title="Payments"
+                title="Fund Transfer"
                 icon={"bank"}
                 active={activeBtn}
                 setActiveBtn={setActiveBtn}
                 to="/transact"
+            />
+            <MenuLink
+                title="Withdraw Funds"
+                icon={"bank"}
+                active={activeBtn}
+                setActiveBtn={setActiveBtn}
+                to="/withdraw"
             />
             <MenuLink
                 title="Settings"
