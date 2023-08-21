@@ -51,7 +51,7 @@ const DateWrapper = styled.div`
     }
 `;
 
-const ListTransaction = ({ title, data, count, val, setVal }) => {
+const ListTransaction = ({ title, data, count, val, setVal, accNo }) => {
     return (
         <Container>
             <Title>
@@ -91,6 +91,7 @@ const ListTransaction = ({ title, data, count, val, setVal }) => {
                 <Transaction
                     data={transaction}
                     key={transaction.transactionId}
+                    accNo={accNo}
                 />
             ))}
         </Container>

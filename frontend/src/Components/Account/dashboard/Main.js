@@ -42,7 +42,7 @@ const Main = () => {
                         `${baseURL}/accountStatement/${accno}`,
                         dates
                     );
-                setTdata(res.data);
+                setTdata(res.data.reverse());
             } catch (e) {
                 console.log(e);
             }
@@ -110,6 +110,7 @@ const Main = () => {
                 data={tdata}
                 val={dates}
                 setVal={setDates}
+                accNo={accData.accno}
             />
         </Container>
     );

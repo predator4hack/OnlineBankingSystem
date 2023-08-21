@@ -16,10 +16,11 @@ const ProfileName = styled.h1`
 `;
 
 const Profile = () => {
+    const username = sessionStorage.getItem("userID");
     return (
         <Container>
             <ProfileImg src={Image} />
-            <ProfileName>Scott Grant</ProfileName>
+            <ProfileName>{username}</ProfileName>
         </Container>
     );
 };

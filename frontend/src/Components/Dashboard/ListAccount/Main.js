@@ -54,7 +54,7 @@ const Main = () => {
                             activeAcc ? activeAcc : selectedAccount
                         }`
                     );
-                    setTdata(res.data);
+                    setTdata(res.data.reverse());
                 } catch (e) {
                     console.log(e);
                 }

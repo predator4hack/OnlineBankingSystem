@@ -18,18 +18,44 @@ const Sidebar = () => {
         axios
             .post(baseURL, user)
             .then((res) => {
-                toast.success(`Logged In Successfully`, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                sessionStorage.setItem("userID", user.userId);
-                navigate("/dashboard");
+                if(res.data === "Login success"){
+                    toast.success(`Logged In Successfully`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    sessionStorage.setItem("userID", user.userId);
+                    navigate("/dashboard");
+                }
+                if(res.data === "Login failed"){
+                    toast.error(`Wrong Password entered!`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+                if(res.data === "Invalid Customer"){
+                    toast.error(`User not found!`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
             })
             .catch((error) => {
                 toast.error(`Error: ${error.message}`, {
