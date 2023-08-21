@@ -1,31 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../../../assets/logo.png";
+import Input from "../Input.js";
 import { Link, useNavigate } from "react-router-dom";
-import Input from "../Input";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
-    const baseURL = "http://localhost:9080/saveCustomer";
+    const baseURL = "http://localhost:9080/adminLogin";
     const navigate = useNavigate();
     const [user, setUser] = useState({
-        userId: "",
+        userid: "",
         password: "",
-        name: "",
-        email: "",
-        mobile: "",
-        aadhar: "",
     });
-
     const submitFormHandler = (e) => {
         e.preventDefault();
         axios
             .post(baseURL, user)
             .then((res) => {
-                toast.success(
-                    `The User ${user.name} has been successfully created`,
-                    {
+                if(res.data === "Login success"){
+                    toast.success(`Logged In Successfully`, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -34,12 +28,36 @@ const Sidebar = () => {
                         draggable: true,
                         progress: undefined,
                         theme: "light",
-                    }
-                );
-                navigate("/login");
+                    });
+                    sessionStorage.setItem("userID", user.userid);
+                    navigate("/admin/dashboard");
+                }
+                if(res.data === "Login failed"){
+                    toast.error(`Wrong Password entered!`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+                if(res.data === "Invalid Admin"){
+                    toast.error(`User not found!`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
             })
             .catch((error) => {
-                console.log(error);
                 toast.error(`Error: ${error.message}`, {
                     position: "top-right",
                     autoClose: 5000,
@@ -62,25 +80,11 @@ const Sidebar = () => {
                 </h3>
             </LogoWrapper>
             <Form onSubmit={submitFormHandler}>
-                <h3>Sign Up</h3>
+                <h3>Admin Login</h3>
                 <Input
-                    type="text"
-                    placeholder="Full Name"
-                    value="name"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <Input
-                    type="text"
+                    type="test"
                     placeholder="Username"
-                    value="userId"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <Input
-                    type="email"
-                    placeholder="Email"
-                    value="email"
+                    value="userid"
                     obj={user}
                     handleInputChange={setUser}
                 />
@@ -91,29 +95,15 @@ const Sidebar = () => {
                     obj={user}
                     handleInputChange={setUser}
                 />
-                <Input
-                    type="tel"
-                    placeholder="Mobile Number"
-                    value="mobile"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <Input
-                    type="text"
-                    placeholder="Aadhar Number"
-                    value="aadhar"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <button>Sign Up</button>
+                <button>Login</button>
             </Form>
             <div>
                 <Terms>
-                    By signing up, I agree to the Privacy Policy <br /> and
-                    Terms of Service
+                    By loging up, I agree to the Privacy Policy <br /> and Terms
+                    of Service
                 </Terms>
                 <h4>
-                    Already have an account? <Link to="/login">Login</Link>
+                    Don't have an admin account? <Link to="/admin/signup">Sign Up</Link>
                 </h4>
             </div>
         </Container>

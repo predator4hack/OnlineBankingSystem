@@ -17,10 +17,16 @@ import TransactionDashboard from "./Components/Transaction/TransDashboard/Transa
 import CreateTransaction from "./Components/Transaction/CreateTransaction/CreateTransaction";
 import Withdraw from "./Components/Transaction/Withdraw/Withdraw";
 import Layout from "./utils/Layout";
+import AdminLayout from "./utils/AdminLayout";
 import Home from "./Components/Home/Home";
 import Offers from "./Components/Offers/Offers";
 import Settings from "./Components/Settings/Settings";
 import NoMatch from "./utils/NoMatch";
+import AdminLoginPage from "./Components/Auth/AdminLogin/AdminLoginPage";
+import AdminSignUp from "./Components/Auth/AdminSignUp/AdminSignupPage";
+import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
+import AdminTransactions from "./Components/AdminDashboard/AdminTransactions";
+import AdminAccounts from "./Components/AdminDashboard/AdminAccounts";
 
 function App() {
     const context = useContext(ThemeContext);
@@ -44,6 +50,8 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/admin/login" element={<AdminLoginPage />} />
+                    <Route path="/admin/signup" element={<AdminSignUp />} />
                     <Route
                         path="/offers"
                         Component={() => (
@@ -58,6 +66,30 @@ function App() {
                             <Layout>
                                 <Dashboard />
                             </Layout>
+                        )}
+                    />
+                    <Route
+                        path="/admin/dashboard"
+                        Component={() => (
+                            <AdminLayout>
+                                <AdminDashboard />
+                            </AdminLayout>
+                        )}
+                    />
+                    <Route
+                        path="/admin/transactions"
+                        Component={() => (
+                            <AdminLayout>
+                                <AdminTransactions />
+                            </AdminLayout>
+                        )}
+                    />
+                    <Route
+                        path="/admin/accounts"
+                        Component={() => (
+                            <AdminLayout>
+                                <AdminAccounts />
+                            </AdminLayout>
                         )}
                     />
                     <Route

@@ -7,15 +7,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
-    const baseURL = "http://localhost:9080/saveCustomer";
+    const baseURL = "http://localhost:9080/saveAdmin";
     const navigate = useNavigate();
     const [user, setUser] = useState({
-        userId: "",
+        userid: "",
         password: "",
-        name: "",
-        email: "",
-        mobile: "",
-        aadhar: "",
     });
 
     const submitFormHandler = (e) => {
@@ -24,7 +20,7 @@ const Sidebar = () => {
             .post(baseURL, user)
             .then((res) => {
                 toast.success(
-                    `The User ${user.name} has been successfully created`,
+                    `The Admin User ${user.userid} has been successfully created`,
                     {
                         position: "top-right",
                         autoClose: 5000,
@@ -36,7 +32,7 @@ const Sidebar = () => {
                         theme: "light",
                     }
                 );
-                navigate("/login");
+                navigate("/admin/login");
             })
             .catch((error) => {
                 console.log(error);
@@ -62,25 +58,11 @@ const Sidebar = () => {
                 </h3>
             </LogoWrapper>
             <Form onSubmit={submitFormHandler}>
-                <h3>Sign Up</h3>
-                <Input
-                    type="text"
-                    placeholder="Full Name"
-                    value="name"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
+                <h3>Admin Sign Up</h3>
                 <Input
                     type="text"
                     placeholder="Username"
-                    value="userId"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <Input
-                    type="email"
-                    placeholder="Email"
-                    value="email"
+                    value="userid"
                     obj={user}
                     handleInputChange={setUser}
                 />
@@ -88,20 +70,6 @@ const Sidebar = () => {
                     type="password"
                     placeholder="Password"
                     value="password"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <Input
-                    type="tel"
-                    placeholder="Mobile Number"
-                    value="mobile"
-                    obj={user}
-                    handleInputChange={setUser}
-                />
-                <Input
-                    type="text"
-                    placeholder="Aadhar Number"
-                    value="aadhar"
                     obj={user}
                     handleInputChange={setUser}
                 />
@@ -113,7 +81,7 @@ const Sidebar = () => {
                     Terms of Service
                 </Terms>
                 <h4>
-                    Already have an account? <Link to="/login">Login</Link>
+                    Already have an admin account? <Link to="/admin/login">Login</Link>
                 </h4>
             </div>
         </Container>
