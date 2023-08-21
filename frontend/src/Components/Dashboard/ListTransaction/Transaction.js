@@ -51,7 +51,12 @@ const PropertyStreet = styled(Text)`
 const DateOpened = styled(Text)`
     width: 15%;
 `;
-const Balance = styled(Text)`
+const PositiveBalance = styled(Text)`
+    color: green;
+    width: 15%;
+`;
+const NegativeBalance = styled(Text)`
+    color: red;
     width: 15%;
 `;
 const TransferredTo = styled.div`
@@ -71,7 +76,7 @@ const StatusIndicator = styled.div`
     right: 7rem;
 `;
 
-const Transaction = ({ data }) => {
+const Transaction = ({ data, accNo }) => {
     const {
         transactionId,
         amount,
@@ -95,12 +100,20 @@ const Transaction = ({ data }) => {
                     </Subtitle> */}
                 </PropertyText>
             </TransactionNo>
-            <DateOpened>{timestamp}</DateOpened>
-            <Balance>${amount}</Balance>
+            {accNo === accFrom && 
+            <NegativeBalance>${amount}</NegativeBalance>}
+            {accNo !== accFrom &&
+            <PositiveBalance>${amount}</PositiveBalance>}
+            <TransferredTo>
+                <Text>{accFrom}</Text>
+            </TransferredTo>
             <TransferredTo>
                 <Text>{accTo}</Text>
             </TransferredTo>
-            <Balance>{transType}</Balance>
+            <TransferredTo>
+                <Text>{transType}</Text>
+            </TransferredTo>
+            <DateOpened>{timestamp}</DateOpened>
             <Status>
                 <Text>{status.message}</Text>
                 {(() => {

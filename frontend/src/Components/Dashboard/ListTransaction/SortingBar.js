@@ -39,10 +39,11 @@ const SortingBar = () => {
     return (
         <Container>
             <TransactionNO>Transaction Number</TransactionNO>
-            <TimeOfTransaction>Time Of Transaction</TimeOfTransaction>
             <Amount>Balance</Amount>
+            <TransferredTo>Transferred From</TransferredTo>
             <TransferredTo>Transferred To</TransferredTo>
             <TransferredTo>Transaction Type</TransferredTo>
+            <TimeOfTransaction>Time Of Transaction</TimeOfTransaction>
             <Status>Status</Status>
         </Container>
     );

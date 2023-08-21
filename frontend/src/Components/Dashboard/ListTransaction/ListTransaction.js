@@ -42,6 +42,7 @@ const ListTransaction = ({ title, data, count }) => {
                 <Transaction
                     data={transaction}
                     key={transaction.transactionId}
+                    accNo={activeContext.actAccount}
                 />
             ))}
             <AllSubmitBtn
