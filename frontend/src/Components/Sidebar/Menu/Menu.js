@@ -34,13 +34,6 @@ const Menu = () => {
                 to={"/dashboard"}
             />
             <MenuLink
-                title="Offers"
-                icon={"gift"}
-                active={activeBtn}
-                setActiveBtn={setActiveBtn}
-                to="/offers"
-            />
-            <MenuLink
                 title="Fund Transfer"
                 icon={"bank"}
                 active={activeBtn}
