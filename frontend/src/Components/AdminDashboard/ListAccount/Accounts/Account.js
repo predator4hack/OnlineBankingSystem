@@ -21,13 +21,33 @@ const Container = styled.div`
 `;
 
 
-const Button = styled.div`
+const DisableButton = styled.div`
     text-transform: uppercase;
     width: 10%;
     font-size: 0.6rem;
     font-weight: 700;
-    background-image: ${({ theme }) => theme.gradient};
+    background-color: #ff0000;
     color: #fff;
+    border-radius: 5rem;
+    padding: 0.7rem;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: all ease-in-out 300ms;
+    border: none;
+
+    &:hover {
+        box-shadow: 0px 0px 7px rgba(128, 74, 216, 0.6);
+    }
+`;
+
+const EnableButton = styled.div`
+    text-transform: uppercase;
+    width: 10%;
+    font-size: 0.6rem;
+    font-weight: 700;
+    background-color: #00ff00;
+    color: #000000;
     border-radius: 5rem;
     padding: 0.7rem;
     display: flex;
@@ -55,7 +75,7 @@ const Subtitle = styled(Text)`
 `;
 
 const AccountNo = styled.div`
-    width: 30%;
+    width: 20%;
     display: flex;
     align-items: center;
 `;
@@ -72,6 +92,7 @@ const AccountTypeImg = styled.img`
 `;
 
 const Redirect = styled.img`
+    margin-left: auto;
     height: 15px;
     width: 15px;
 `;
@@ -162,7 +183,10 @@ const Account = ({ data }) => {
                 <Subtitle>{ifsc}</Subtitle>
             </Branch>
             <Balance>{acctype}</Balance>
-            <Button onClick={() => toggleDisableHandler()}>{dis === true ? "Enable" : "Disable"}</Button>
+            {dis && 
+            <DisableButton onClick={() => toggleDisableHandler()}>Enable</DisableButton>}
+            {!dis &&
+            <EnableButton onClick={() => toggleDisableHandler()}>Disable</EnableButton>}
             <Redirect
                 onClick={() => navigate(`/accountDashboard/${accno}`)}
                 src={require(`../../../../assets/images/redirect.png`)}

@@ -57,10 +57,10 @@ const PropertyStreet = styled(Text)`
     font-size: 0.8rem;
 `;
 const DateOpened = styled(Text)`
-    width: 15%;
+    width: 20%;
 `;
 const Balance = styled(Text)`
-    width: 15%;
+    width: 25%;
 `;
 const Branch = styled.div`
     width: 17%;

@@ -19,7 +19,7 @@ const Text = styled.h1`
 `;
 
 const Account = styled(Text)`
-    width: 30%;
+    width: 20%;
 `;
 
 const MoveInDate = styled(Text)`

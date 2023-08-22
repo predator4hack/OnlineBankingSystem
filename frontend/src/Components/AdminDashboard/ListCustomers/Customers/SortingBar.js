@@ -23,15 +23,15 @@ const Account = styled(Text)`
 `;
 
 const MoveInDate = styled(Text)`
-    width: 15%;
+    width: 20%;
 `;
 
 const Rent = styled(Text)`
-    width: 16%;
+    width: 25%;
 `;
 
 const Deposit = styled(Text)`
-    width: 17%;
+    width: 25%;
 `;
 
 const Status = styled(Text)``;
