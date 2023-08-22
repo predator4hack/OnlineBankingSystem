@@ -20,6 +20,14 @@ public class Users {
 	@Column(nullable=false)
 	private String userid;
 	
+	public List<accounts> getAccount() {
+		return account;
+	}
+
+	public void setAccount(List<accounts> account) {
+		this.account = account;
+	}
+
 	@Column(nullable=false)
 	private String name;
 	
