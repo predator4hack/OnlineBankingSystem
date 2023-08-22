@@ -104,6 +104,8 @@ const Sidebar = () => {
                 </Terms>
                 <h4>
                     Don't have an admin account? <Link to="/admin/signup">Sign Up</Link>
+                    <br/><br/>
+                    Are you a customer? <Link to="/login">Customer Login</Link>
                 </h4>
             </div>
         </Container>
