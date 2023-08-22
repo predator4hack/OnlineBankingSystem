@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ActiveContext } from "../Main";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
     display: flex;
@@ -15,6 +17,27 @@ const Container = styled.div`
     &:hover {
         /* box-shadow: 0px 10px 8px -8px rgba(138, 153, 192, 0.6); */
         background-color: ${({ theme }) => theme.secondary};
+    }
+`;
+
+
+const Button = styled.div`
+    text-transform: uppercase;
+    width: 10%;
+    font-size: 0.6rem;
+    font-weight: 700;
+    background-image: ${({ theme }) => theme.gradient};
+    color: #fff;
+    border-radius: 5rem;
+    padding: 0.7rem;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: all ease-in-out 300ms;
+    border: none;
+
+    &:hover {
+        box-shadow: 0px 0px 7px rgba(128, 74, 216, 0.6);
     }
 `;
 
@@ -79,10 +102,49 @@ const StatusIndicator = styled.div`
 `;
 
 const Account = ({ data }) => {
-    const { accno, acctype, balance, openingDate, ifsc, branch } = data;
+    const { accno, acctype, balance, openingDate, ifsc, branch, disabled } = data;
     const activeContext = useContext(ActiveContext);
     console.log("Active context: ", activeContext);
     const navigate = useNavigate();
+    const baseURL = "http://localhost:9080";
+    const userid = sessionStorage.getItem("userID");
+    const [dis, setDis] = useState(disabled);
+    
+    const toggleDisableHandler = () => {
+        axios.post(`${baseURL}/disable/${accno}/${userid}`)
+        .then((res) => {
+            if(res.data === "Account not found")
+            {
+                toast.error("Account not found", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            else {
+                toast.success(res.data, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                if(dis === true)
+                    setDis(false);
+                else
+                    setDis(true);
+            }
+        })
+    };
+
     return (
         <Container onClick={() => activeContext.actDispatch(accno)}>
             <AccountNo>
@@ -91,9 +153,6 @@ const Account = ({ data }) => {
                 />
                 <PropertyText>
                     <PropertyStreet>{accno}</PropertyStreet>
-                    {/* <Subtitle>
-                        {branch} {ifsc}
-                    </Subtitle> */}
                 </PropertyText>
             </AccountNo>
             <DateOpened>{openingDate}</DateOpened>
@@ -103,6 +162,7 @@ const Account = ({ data }) => {
                 <Subtitle>{ifsc}</Subtitle>
             </Branch>
             <Balance>{acctype}</Balance>
+            <Button onClick={() => toggleDisableHandler()}>{dis === true ? "Enable" : "Disable"}</Button>
             <Redirect
                 onClick={() => navigate(`/accountDashboard/${accno}`)}
                 src={require(`../../../../assets/images/redirect.png`)}

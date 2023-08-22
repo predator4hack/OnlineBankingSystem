@@ -34,7 +34,7 @@ public class AdminController {
 		return adminService.adminLogin(admin);
 	}
 	
-	@PostMapping("/toggleDisable/{accno}/{userid}")
+	@PostMapping("/disable/{accno}/{userid}")
 	public String toggleDisable(@PathVariable("accno") long accno, @PathVariable("userid") String userid)
 	{
 		return adminService.toggleDisable(accno, userid);

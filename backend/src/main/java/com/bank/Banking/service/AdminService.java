@@ -84,10 +84,12 @@ public class AdminService {
 		if(acc.isDisabled() == true)
 		{
 			acc.setDisabled(false);
+			accRepo.save(acc);
 			return "Account enabled";
 		}
 		else {
 			acc.setDisabled(true);
+			accRepo.save(acc);
 			return "Account Disabled";
 		}
 	}

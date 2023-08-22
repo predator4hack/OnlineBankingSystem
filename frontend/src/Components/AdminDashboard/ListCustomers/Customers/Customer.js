@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { ActiveContext } from "../Main";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
     display: flex;
@@ -80,16 +81,12 @@ const StatusIndicator = styled.div`
 
 const Customer = ({ data }) => {
     const activeContext = useContext(ActiveContext);
-    console.log("Active context: ", activeContext);
-    const navigate = useNavigate();
+
     return (
         <Container>
             <AccountNo>
                 <PropertyText>
                     <PropertyStreet>{data.name}</PropertyStreet>
-                    {/* <Subtitle>
-                        {branch} {ifsc}
-                    </Subtitle> */}
                 </PropertyText>
             </AccountNo>
             <DateOpened>{data.userId}</DateOpened>
