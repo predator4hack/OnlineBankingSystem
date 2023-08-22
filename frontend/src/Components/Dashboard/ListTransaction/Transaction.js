@@ -114,21 +114,6 @@ const Transaction = ({ data, accNo }) => {
                 <Text>{transType}</Text>
             </TransferredTo>
             <DateOpened>{timestamp}</DateOpened>
-            <Status>
-                <Text>{status.message}</Text>
-                {(() => {
-                    switch (status) {
-                        case "FAIL":
-                            return <StatusIndicator color="#F17E7E" />;
-                        case "PENDING":
-                            return <StatusIndicator color="#FFD056" />;
-                        case "SUCCESS":
-                            return <StatusIndicator color="#75C282" />;
-                        default:
-                            return <StatusIndicator color="#AAA5A5" />;
-                    }
-                })()}
-            </Status>
         </Container>
     );
 };

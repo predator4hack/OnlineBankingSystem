@@ -19,7 +19,7 @@ const Text = styled.h1`
 `;
 
 const Account = styled(Text)`
-    width: 30%;
+    width: 20%;
 `;
 
 const MoveInDate = styled(Text)`
@@ -31,7 +31,7 @@ const Rent = styled(Text)`
 `;
 
 const Deposit = styled(Text)`
-    width: 17%;
+    width: 14%;
 `;
 
 const Status = styled(Text)``;
@@ -43,7 +43,8 @@ const SortingBar = () => {
             <MoveInDate>Date Opened</MoveInDate>
             <Rent>Balance</Rent>
             <Deposit>Branch</Deposit>
-            <Status>Type</Status>
+            <Deposit>Type</Deposit>
+            <Status>Active</Status>
         </Container>
     );
 };

@@ -32,7 +32,7 @@ const Subtitle = styled(Text)`
 `;
 
 const AccountNo = styled.div`
-    width: 30%;
+    width: 20%;
     display: flex;
     align-items: center;
 `;
@@ -62,7 +62,7 @@ const Balance = styled(Text)`
     width: 15%;
 `;
 const Branch = styled.div`
-    width: 17%;
+    width: 14%;
 `;
 const Status = styled.div`
     display: flex;
@@ -73,13 +73,13 @@ const StatusIndicator = styled.div`
     height: 15px;
     border-radius: 10px;
     background-color: ${(props) => props.color};
-    margin-left: 1rem;
-    position: absolute;
+    margin-left: 7rem;
+    position: relative;
     right: 7rem;
 `;
 
 const Account = ({ data }) => {
-    const { accno, acctype, balance, openingDate, ifsc, branch } = data;
+    const { accno, acctype, balance, openingDate, ifsc, branch, disabled } = data;
     const activeContext = useContext(ActiveContext);
     console.log("Active context: ", activeContext);
     const navigate = useNavigate();
@@ -103,6 +103,18 @@ const Account = ({ data }) => {
                 <Subtitle>{ifsc}</Subtitle>
             </Branch>
             <Balance>{acctype}</Balance>
+            <Status>
+                {(() => {
+                    switch (disabled) {
+                        case true:
+                            return <StatusIndicator color="#F17E7E" />;
+                        case false:
+                            return <StatusIndicator color="#75C282" />;
+                        default:
+                            return <StatusIndicator color="#AAA5A5" />;
+                    }
+                })()}
+            </Status>
             <Redirect
                 onClick={() => navigate(`/accountDashboard/${accno}`)}
                 src={require(`../../../../assets/images/redirect.png`)}

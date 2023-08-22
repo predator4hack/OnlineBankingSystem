@@ -44,7 +44,6 @@ const SortingBar = () => {
             <TransferredTo>Transferred To</TransferredTo>
             <TransferredTo>Transaction Type</TransferredTo>
             <TimeOfTransaction>Time Of Transaction</TimeOfTransaction>
-            <Status>Status</Status>
         </Container>
     );
 };
