@@ -76,6 +76,22 @@ public class AdminService {
 		return result;
 	}
 	
+	public String toggleDisable(long accno, String userid)
+	{
+		if(accRepo.findById(accno).isEmpty())
+			return "Account not found";
+		Account acc = accRepo.findById(accno).get();
+		if(acc.isDisabled() == true)
+		{
+			acc.setDisabled(false);
+			return "Account enabled";
+		}
+		else {
+			acc.setDisabled(true);
+			return "Account Disabled";
+		}
+	}
+	
 	public List<Customer> getCustomers(String userid)
 	{
 		if(adminRepo.findById(userid).isEmpty())
