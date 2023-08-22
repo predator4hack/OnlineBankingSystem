@@ -1,11 +1,15 @@
 package com.banking.BankingApp.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banking.BankingApp.dao.UserRepository;
+import com.banking.BankingApp.exception.NoDataFoundException;
+import com.banking.BankingApp.exception.ResourceNotFoundException;
 import com.banking.BankingApp.model.LoginModel;
 import com.banking.BankingApp.model.User;
 
@@ -41,6 +45,28 @@ public class UserService {
 			}
 		}
 		return result;
+	}
+
+	public List<User> fetchAllUsers() throws NoDataFoundException {
+		// TODO Auto-generated method stub
+		List<User> userList=new ArrayList<>();
+		
+			if(userList.size()==0)
+				throw new NoDataFoundException("No data to display");
+			else 
+				return userList;
+		
+		
+		
+	}
+	
+	public User findUser(String username)  throws ResourceNotFoundException {
+		User u=userRepo.findById(username).orElse(null);
+		
+		if(u==null) 
+			throw new ResourceNotFoundException("User not found");
+		else 
+			return u;
 	}
 
 }
