@@ -27,16 +27,18 @@ public class Customer {
 	@Column(nullable=false)
 	private String email;
 	
+	@Column(nullable=false)
 	private String aadhar;
 	
+	@Column(nullable=false)
 	private String dob;
-	
+
 	private String currentAddress;
-	
+
 	private String permanentAddress;
 	
 	private String fathername;
-	
+
 	private String mothername;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)

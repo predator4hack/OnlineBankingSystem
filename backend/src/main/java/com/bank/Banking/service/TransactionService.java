@@ -25,7 +25,7 @@ public class TransactionService {
 		Account acc = accRepo.findById(accnumber).get();
 		double balance = acc.getBalance();
 		double amt = trans.getAmount();
-		if(amt > balance || accRepo.findById(toAccNum).isEmpty())
+		if(amt > balance || accRepo.findById(toAccNum).isEmpty() || acc.isDisabled() == true || accRepo.findById(toAccNum).get().isDisabled() == true)
 			trans.setStatus("FAIL");
 		else {
 			Account acc2 = accRepo.findById(toAccNum).get();

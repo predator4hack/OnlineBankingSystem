@@ -14,6 +14,8 @@ import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
 import com.bank.Banking.model.Admin;
 import com.bank.Banking.model.Transaction;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,18 +76,33 @@ public class AdminService {
 		return result;
 	}
 	
-	public List<Customer> getCustomers()
+	public List<Customer> getCustomers(String userid)
 	{
+		if(adminRepo.findById(userid).isEmpty())
+		{
+			List<Customer> res = new ArrayList<>();
+			return res;
+		}
 		return custRepo.findAll();
 	}
 	
-	public List<Account> getAccounts()
+	public List<Account> getAccounts(String userid)
 	{
+		if(adminRepo.findById(userid).isEmpty())
+		{
+			List<Account> res = new ArrayList<>();
+			return res;
+		}
 		return accRepo.findAll();
 	}
 	
-	public List<Transaction> getTransactions()
+	public List<Transaction> getTransactions(String userid)
 	{
+		if(adminRepo.findById(userid).isEmpty())
+		{
+			List<Transaction> res = new ArrayList<>();
+			return res;
+		}
 		return transRepo.findAll();
 	}
 }

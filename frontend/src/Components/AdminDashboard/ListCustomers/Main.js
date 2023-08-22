@@ -22,12 +22,13 @@ const Main = () => {
     };
     const [data, setData] = useState([]);
     const baseURL = "http://localhost:9080";
+    const userid = sessionStorage.getItem("userID");
 
     useEffect(() => {
         async function fetchAccounts() {
             try {
                 const res = await axios.get(
-                    `${baseURL}/getAllCustomers`
+                    `${baseURL}/getAllCustomers/${userid}`
                 );
                 setData(res.data)
             } catch (e) {

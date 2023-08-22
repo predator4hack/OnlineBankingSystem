@@ -10,6 +10,7 @@ import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
+
 import java.util.List;
 
 @Service
@@ -74,6 +75,7 @@ public class CustomerService {
 		String result = "";
 		Customer cust = null;
 		Optional<Customer> obj = custRepo.findById(u.getUserId());
+		
 		if(obj.isPresent())
 			cust = obj.get();
 		if(cust == null)

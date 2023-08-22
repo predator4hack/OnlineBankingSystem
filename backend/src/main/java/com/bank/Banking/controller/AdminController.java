@@ -34,21 +34,21 @@ public class AdminController {
 		return adminService.adminLogin(admin);
 	}
 	
-	@GetMapping("/getAllCustomers")
-	public List<Customer> getCustomers()
+	@GetMapping("/getAllCustomers/{userid}")
+	public List<Customer> getCustomers(@PathVariable("userid") String userid)
 	{
-		return adminService.getCustomers();
+		return adminService.getCustomers(userid);
 	}
 	
-	@GetMapping("/getAllAccounts")
-	public List<Account> getAccounts()
+	@GetMapping("/getAllAccounts/{userid}")
+	public List<Account> getAccounts(@PathVariable("userid") String userid)
 	{
-		return adminService.getAccounts();
+		return adminService.getAccounts(userid);
 	}
 	
-	@GetMapping("/getAllTransactions")
-	public List<Transaction> getTransactions()
+	@GetMapping("/getAllTransactions/{userid}")
+	public List<Transaction> getTransactions(@PathVariable("userid") String userid)
 	{
-		return adminService.getTransactions();
+		return adminService.getTransactions(userid);
 	}
 }

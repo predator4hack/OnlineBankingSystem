@@ -14,6 +14,7 @@ public class Account {
 	private String openingDate;
 	private String ifsc;
 	private String branch;
+	private boolean isDisabled;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -72,6 +73,13 @@ public class Account {
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
+	public boolean isDisabled() {
+		return isDisabled;
+	}
+	public void setDisabled(boolean isDisabled) {
+		this.isDisabled = isDisabled;
+	}
+	
 	
 	
 }

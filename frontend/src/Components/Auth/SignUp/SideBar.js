@@ -14,8 +14,9 @@ const Sidebar = () => {
         password: "",
         name: "",
         email: "",
-        mobile: "",
+        mobile: 0,
         aadhar: "",
+        dob: "",
     });
 
     const submitFormHandler = (e) => {
@@ -92,7 +93,7 @@ const Sidebar = () => {
                     handleInputChange={setUser}
                 />
                 <Input
-                    type="tel"
+                    type="number"
                     placeholder="Mobile Number"
                     value="mobile"
                     obj={user}
@@ -102,6 +103,13 @@ const Sidebar = () => {
                     type="text"
                     placeholder="Aadhar Number"
                     value="aadhar"
+                    obj={user}
+                    handleInputChange={setUser}
+                />
+                <Input
+                    type="date"
+                    placeholder="Date of Birth"
+                    value="dob"
                     obj={user}
                     handleInputChange={setUser}
                 />

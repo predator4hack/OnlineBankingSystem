@@ -28,6 +28,7 @@ public class AccountService {
 	@Autowired
 	TransactionRepository transRepo;
 	
+	
 	public Account createAccount(Account account, String userid) {
 		long generatedNumber = 0;
 		Random rand = new Random();
@@ -42,6 +43,7 @@ public class AccountService {
 		account.setUser(u);
 		account.setAccno(generatedNumber);
 		account.setIfsc(ifsc);
+		account.setDisabled(false);
 		return accRepo.save(account);
 	}
 	
