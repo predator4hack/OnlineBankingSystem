@@ -24,6 +24,7 @@ const Main = () => {
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [data, setData] = useState([]);
     const [tdata, setTdata] = useState([]);
+    const [tlength, setTlength] = useState(0);
     const userId = sessionStorage.getItem("userID");
     const baseURL = "http://localhost:9080";
 
@@ -54,7 +55,8 @@ const Main = () => {
                             activeAcc ? activeAcc : selectedAccount
                         }`
                     );
-                    setTdata(res.data.reverse());
+                    setTdata(res.data.slice(-3).reverse());
+                    setTlength(res.data.length);
                 } catch (e) {
                     console.log(e);
                 }
@@ -79,7 +81,7 @@ const Main = () => {
                 />
                 <ListTransaction
                     title="Transactions"
-                    count={tdata.length}
+                    count={tlength}
                     data={tdata}
                 />
             </Container>

@@ -52,19 +52,35 @@ const Main = () => {
         axios
             .post(`${baseURL}/transact`, transaction)
             .then((res) => {
-                toast.success("Funds Transferred Successfully!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                setTimeout(() => {
-                    navigate("/dashboard");
-                  }, 2000);
+                if(res.data === "Transaction Success")
+                {
+                    toast.success("Funds Transferred Successfully!", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    setTimeout(() => {
+                        navigate("/dashboard");
+                    }, 2000);
+                }
+                else
+                {
+                    toast.error("Transaction failed!", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
             })
             .catch((e) => {
                 console.log(e);

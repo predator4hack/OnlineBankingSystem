@@ -48,19 +48,33 @@ const Main = () => {
         axios
             .post(`${baseURL}/transact`, transaction)
             .then((res) => {
-                toast.success("Money Withdrawn Successfully!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                setTimeout(() => {
-                    navigate("/dashboard");
-                  }, 2000);
+                if(res.data === "Transaction Success"){
+                    toast.success("Money Withdrawn Successfully!", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    setTimeout(() => {
+                        navigate("/dashboard");
+                    }, 2000);
+                }
+                else {
+                    toast.error('Withdraw Failed', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
             })
             .catch((e) => {
                 console.log(e);
