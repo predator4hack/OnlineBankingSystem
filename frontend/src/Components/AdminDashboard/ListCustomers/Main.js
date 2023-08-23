@@ -1,9 +1,6 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Nav from "./Nav";
-
-import depositData from "../../../assets/DepositData.json";
-import NewSubmitBtn from "../../../utils/NewSubmitBtn";
 import Accounts from "./Customers/Customers";
 import axios from "axios";
 
@@ -17,10 +14,10 @@ const Container = styled.div`
 export const ActiveContext = React.createContext();
 
 const Main = () => {
-    const reducer = (state, action) => {
-        return action;
-    };
     const [data, setData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
+
     const baseURL = "http://localhost:9080";
     const userid = sessionStorage.getItem("userID");
 
@@ -30,23 +27,44 @@ const Main = () => {
                 const res = await axios.get(
                     `${baseURL}/getAllCustomers/${userid}`
                 );
-                setData(res.data)
+                setData(res.data);
+                setFilteredData(res.data);
             } catch (e) {
                 console.log(e);
             }
         }
         fetchAccounts();
     }, []);
-    
+
+    useEffect(() => {
+        const filtered = data.filter((account) => {
+            const { name, userId, email, mobile } = account;
+            const lowerSearchQuery = searchQuery.toLowerCase();
+            return (
+                name.toLowerCase().includes(lowerSearchQuery) ||
+                userId.toLowerCase().includes(lowerSearchQuery) ||
+                email.toLowerCase().includes(lowerSearchQuery) || 
+                mobile.toString().includes(lowerSearchQuery)
+            );
+        });
+        setFilteredData(filtered);
+    }, [data, searchQuery]);
+
     return (
-        <ActiveContext.Provider
-        >
+        <ActiveContext.Provider>
             <Container>
                 <Nav />
+                <input
+                    type="text"
+                    placeholder="Search by name, customer id, email or mobile"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                />
                 <Accounts
                     title="Customers"
-                    count={data.length}
-                    data={data}
+                    count={filteredData.length}
+                    data={filteredData}
                 />
             </Container>
         </ActiveContext.Provider>

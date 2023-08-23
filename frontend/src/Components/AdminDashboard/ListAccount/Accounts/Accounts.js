@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import SortingBar from "./SortingBar";
-import AllSubmitBtn from "../../../../utils/AllSubmitBtn";
 import Account from "./Account";
 
 const Container = styled.div``;
@@ -38,7 +37,6 @@ const Accounts = ({ title, data, count }) => {
             {data.map((account) => (
                 <Account data={account} key={account.accno} />
             ))}
-            {/* <AllSubmitBtn title={title} /> */}
         </Container>
     );
 };

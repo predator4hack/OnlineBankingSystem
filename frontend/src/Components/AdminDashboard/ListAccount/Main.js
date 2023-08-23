@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import styled from "styled-components";
 import Nav from "./Nav";
 import Accounts from "./Accounts/Accounts";
@@ -20,6 +20,8 @@ const Main = () => {
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [data, setData] = useState([]);
     const [tdata, setTdata] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
     const baseURL = "http://localhost:9080";
     const userid = sessionStorage.getItem("userID");
 
@@ -30,6 +32,7 @@ const Main = () => {
                     `${baseURL}/getAllAccounts/${userid}`
                 );
                 setData(res.data);
+                setFilteredData(res.data);
                 if (res.data.length > 0) {
                     setSelectedAccount(res.data[0].accno);
                 }
@@ -39,7 +42,16 @@ const Main = () => {
         }
         fetchAccounts();
     }, []);
+
+    useEffect(() => {
+        const filtered = data.filter((account) => {
+            return account.accno.toString().includes(searchQuery);
+        });
+        setFilteredData(filtered);
+    }, [data, searchQuery]);
+
     const [activeAcc, dispatch] = useReducer(reducer, selectedAccount);
+
     return (
         <ActiveContext.Provider
             value={{
@@ -49,10 +61,17 @@ const Main = () => {
         >
             <Container>
                 <Nav />
+                <input
+                    type="text"
+                    placeholder="Search by Account Number"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                />
                 <Accounts
                     title="Active Accounts"
-                    count={data.length}
-                    data={data}
+                    count={filteredData.length}
+                    data={filteredData}
                 />
             </Container>
         </ActiveContext.Provider>
