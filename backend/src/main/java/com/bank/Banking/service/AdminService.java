@@ -11,7 +11,6 @@ import com.bank.Banking.dao.AdminRepository;
 import com.bank.Banking.dao.TransactionRepository;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
-import com.bank.Banking.model.LoginModel;
 import com.bank.Banking.model.Admin;
 import com.bank.Banking.model.Transaction;
 
@@ -88,9 +87,14 @@ public class AdminService {
 			return "Account enabled";
 		}
 		else {
-			acc.setDisabled(true);
-			accRepo.save(acc);
-			return "Account Disabled";
+			if((acc.getBalance() < 10000 && acc.getAcctype() == "Savings") || (acc.getBalance() < 25000 && acc.getAcctype() == "Current") || (acc.getBalance() < 5000 && acc.getAcctype() == "Salary"))
+			{
+				acc.setDisabled(true);
+				accRepo.save(acc);
+				return "Account Disabled";
+			}
+			else
+				return "Account cannot be disabled";
 		}
 	}
 	
