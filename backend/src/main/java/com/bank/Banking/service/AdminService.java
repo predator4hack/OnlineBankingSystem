@@ -87,7 +87,7 @@ public class AdminService {
 			return "Account enabled";
 		}
 		else {
-			if((acc.getBalance() < 10000 && acc.getAcctype() == "Savings") || (acc.getBalance() < 25000 && acc.getAcctype() == "Current") || (acc.getBalance() < 5000 && acc.getAcctype() == "Salary"))
+			if((acc.getBalance() < 10000 && acc.getAcctype().equals("Savings")) || (acc.getBalance() < 25000 && acc.getAcctype().equals("Current")) || (acc.getBalance() < 5000 && acc.getAcctype().equals("Salary")))
 			{
 				acc.setDisabled(true);
 				accRepo.save(acc);
