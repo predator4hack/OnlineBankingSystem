@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AddCustomer from "./Components/addCustomer";
+import CreateCustomer from "./Components/AdminDashboard/CreateCustomer/createCustomer";
 import React, { Component, useContext } from "react";
 import LoginPage from "./Components/Auth/Login/LoginPage";
 import SignUp from "./Components/Auth/SignUp/SignupPage";
@@ -52,6 +52,7 @@ function App() {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/admin/login" element={<AdminLoginPage />} />
                     <Route path="/admin/signup" element={<AdminSignUp />} />
+                    <Route path="/admin/createCustomer" element={<CreateCustomer />} />
                     <Route
                         path="/offers"
                         Component={() => (

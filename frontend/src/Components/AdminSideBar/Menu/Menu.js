@@ -40,6 +40,13 @@ const Menu = () => {
                 setActiveBtn={setActiveBtn}
                 to="/admin/transactions"
             />
+            <MenuLink
+                title="Add Customer"
+                icon={"settings"}
+                active={activeBtn}
+                setActiveBtn={setActiveBtn}
+                to="/admin/createCustomer"
+            />
             <Button onClick={logoutHandler}>Logout</Button>
 
         </Container>

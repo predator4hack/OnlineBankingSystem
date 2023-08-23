@@ -41,6 +41,27 @@ const DisableButton = styled.div`
     }
 `;
 
+const DisableButtonDisabled = styled.div`
+    text-transform: uppercase;
+    width: 10%;
+    font-size: 0.6rem;
+    font-weight: 700;
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 5rem;
+    padding: 0.7rem;
+    display: flex;
+    justify-content: center;
+    cursor: not-allowed;
+    transition: all ease-in-out 300ms;
+    border: none;
+    opacity: 0.5;
+
+    &:hover {
+        box-shadow: none;
+    }
+`;
+
 const EnableButton = styled.div`
     text-transform: uppercase;
     width: 10%;
@@ -130,13 +151,25 @@ const Account = ({ data }) => {
     const baseURL = "http://localhost:9080";
     const userid = sessionStorage.getItem("userID");
     const [dis, setDis] = useState(disabled);
+    const [invalid, setInvalid] = useState(false);
+
+    useEffect(() => {
+        if(acctype == "Savings" && balance < 10000)
+            setInvalid(true);
+        else if(acctype == "Current" && balance < 25000)
+            setInvalid(true);
+        else if(acctype == "Salary" && balance < 5000)
+            setInvalid(true);
+        else
+            setInvalid(false);
+    }, [acctype, balance, invalid]);
     
     const toggleDisableHandler = () => {
         axios.post(`${baseURL}/disable/${accno}/${userid}`)
         .then((res) => {
-            if(res.data === "Account not found")
+            if(res.data === "Account not found" || res.data === "Account cannot be disabled")
             {
-                toast.error("Account not found", {
+                toast.error(res.data, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -184,9 +217,11 @@ const Account = ({ data }) => {
             </Branch>
             <Balance>{acctype}</Balance>
             {dis && 
-            <DisableButton onClick={() => toggleDisableHandler()}>Enable</DisableButton>}
-            {!dis &&
-            <EnableButton onClick={() => toggleDisableHandler()}>Disable</EnableButton>}
+            <EnableButton onClick={() => toggleDisableHandler()}>Enable</EnableButton>}
+            {!dis && invalid &&
+            <DisableButton onClick={() => toggleDisableHandler()}>Disable</DisableButton>}
+            {!dis && !invalid &&
+            <DisableButtonDisabled onClick={() => toggleDisableHandler()}>Disable</DisableButtonDisabled>}
             <Redirect
                 onClick={() => navigate(`/accountDashboard/${accno}`)}
                 src={require(`../../../../assets/images/redirect.png`)}
