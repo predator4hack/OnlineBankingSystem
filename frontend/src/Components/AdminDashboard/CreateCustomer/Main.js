@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 const Main = () => {
     const baseURL = "http://localhost:9080/saveCustomer";
-    const date = new Date();
     const navigate = useNavigate();
     const [user, setUser] = useState({
         userId: "",
@@ -22,8 +21,74 @@ const Main = () => {
 
     const submitFormHandler = (e) => {
         e.preventDefault();
-        axios
-            .post(baseURL, user)
+
+        if (user.password.length < 8 || user.password.length > 20) {
+            toast.error("Password must be between 8 and 20 characters", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Stop the submission if the validation fails
+        }
+
+        if (user.mobile.toString().length !== 10) {
+            toast.error("Mobile number must be 10 digits long", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Stop the submission if the validation fails
+        }
+
+        if (user.aadhar.toString().length !== 12) {
+            toast.error("Aadhar number must be 12 digits long", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Stop the submission if the validation fails
+        }
+
+        // if age is less than 18 years, then fail
+        const today = new Date();
+        const birthDate = new Date(user.dob);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const month = today.getMonth() - birthDate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        if (age < 18) {
+            toast.error("Age must be greater than 18 years", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Stop the submission if the validation fails
+        }
+
+
+        axios.post(baseURL, user)
             .then((res) => {
                 toast.success(
                     `The User ${user.name} has been successfully created`,
@@ -95,7 +160,7 @@ const Main = () => {
                     handleInputChange={setUser}
                 />
                 <Input
-                    type="text"
+                    type="number"
                     placeholder="Aadhar Number"
                     value="aadhar"
                     obj={user}

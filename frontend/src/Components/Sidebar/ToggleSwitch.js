@@ -73,6 +73,7 @@ const Switch = styled.div`
         left: ${({ theme }) => theme.switchPadding};
         transition: left ${({ theme }) => theme.switchAnimationDuration};
         will-change: left;
+        transition: left ${({ theme }) => theme.switchAnimationDuration};
     }
 `;
 
