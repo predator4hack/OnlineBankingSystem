@@ -93,7 +93,7 @@ const Main = () => {
     return (
         <Container>
             <Form onSubmit={submitFormHandler}>
-                <h2>Transfer Funds</h2>
+                <h2>Withdraw Funds</h2>
                 <Input
                     type="text"
                     obj={transaction}
