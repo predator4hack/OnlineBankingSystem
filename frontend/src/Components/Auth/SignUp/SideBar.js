@@ -34,7 +34,7 @@ const Sidebar = () => {
             });
             return; // Stop the submission if the validation fails
         }
-        
+
         if (user.mobile.toString().length !== 10) {
             toast.error("Mobile number must be 10 digits long", {
                 position: "top-right",
@@ -74,6 +74,21 @@ const Sidebar = () => {
 
         if (age < 18) {
             toast.error("Age must be greater than 18 years", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Stop the submission if the validation fails
+        }
+
+        if(age > 120)
+        {
+            toast.error("Age must be less than 120 years", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

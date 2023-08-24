@@ -87,6 +87,19 @@ const Main = () => {
             return; // Stop the submission if the validation fails
         }
 
+        if(age > 120) {
+            toast.error("Age must be less than 120 years", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Stop the submission if the validation fails
+        }
 
         axios.post(baseURL, user)
             .then((res) => {
