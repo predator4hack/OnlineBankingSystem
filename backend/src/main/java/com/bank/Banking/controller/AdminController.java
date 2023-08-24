@@ -16,7 +16,7 @@ import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.AdminService;
 
 
-@RestController
+@RestController("AdminController")
 @CrossOrigin("*")
 public class AdminController {
 	@Autowired
