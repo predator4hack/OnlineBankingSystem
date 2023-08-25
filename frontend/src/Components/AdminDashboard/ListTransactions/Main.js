@@ -17,19 +17,21 @@ const Main = () => {
     const reducer = (state, action) => {
         return action;
     };
+    const [searchQuery, setSearchQuery] = useState("");
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [data, setData] = useState([]);
-    const [tdata, setTdata] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const baseURL = "http://localhost:9080";
     const userid = sessionStorage.getItem("userID");
 
     useEffect(() => {
-        async function fetchAccounts() {
+        async function fetchTransactions() {
             try {
                 const res = await axios.get(
                     `${baseURL}/getAllTransactions/${userid}`
                 );
                 setData(res.data);
+                setFilteredData(res.data);
                 if (res.data.length > 0) {
                     setSelectedAccount(res.data[0].accno);
                 }
@@ -37,8 +39,19 @@ const Main = () => {
                 console.log(e);
             }
         }
-        fetchAccounts();
+        fetchTransactions();
     }, []);
+
+    useEffect(() => {
+        const filtered = data.filter((transaction) => {
+            return transaction.accFrom.toString().includes(searchQuery) || 
+                transaction.accTo.toString().includes(searchQuery) ||
+                transaction.transactionId.toString().includes(searchQuery) ||
+                transaction.transType.includes(searchQuery);
+        }); 
+        setFilteredData(filtered);
+    }, [data, searchQuery]);
+
     const [activeAcc, dispatch] = useReducer(reducer, selectedAccount);
     return (
         <ActiveContext.Provider
@@ -49,10 +62,17 @@ const Main = () => {
         >
             <Container>
                 <Nav />
+                <input
+                    type="text"
+                    placeholder="Search by transaction details"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                />
                 <Accounts
                     title="Transactions"
-                    count={data.length}
-                    data={data}
+                    count={filteredData.length}
+                    data={filteredData}
                 />
             </Container>
         </ActiveContext.Provider>
