@@ -1,8 +1,6 @@
-package com.bank.Banking.exceptions;
+package com.bank.Banking.exception;
 
 
-
-//@ResponseStatus(value=Ht/tpStatus.NOT_FOUND,reason = "Invalid Employee Id")
 public class ResourceNotFoundException extends Exception {
 
 	
