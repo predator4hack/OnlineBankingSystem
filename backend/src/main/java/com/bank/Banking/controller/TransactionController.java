@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.TransactionService;
 
-@RestController
+@RestController("TransactionController")
 @CrossOrigin("*")
 public class TransactionController {
 	@Autowired

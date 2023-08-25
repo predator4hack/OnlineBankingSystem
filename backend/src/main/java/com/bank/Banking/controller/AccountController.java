@@ -15,7 +15,7 @@ import com.bank.Banking.model.AccountStatement;
 import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.AccountService;
 
-@RestController
+@RestController("AccountController")
 @CrossOrigin("*")
 public class AccountController {
 	@Autowired

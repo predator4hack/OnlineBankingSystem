@@ -10,7 +10,11 @@ import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
+import com.bank.Banking.exception.NoDataFoundException;
+import com.bank.Banking.exception.ResourceNotFoundException;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,8 +97,20 @@ public class CustomerService {
 		return result;
 	}
 	
-	public Customer fetchUser(String userid)
-	{
-		return custRepo.findById(userid).get();
+//	public Customer fetchUser(String userid)
+//	{
+//		return custRepo.findById(userid).get();
+//	}
+	
+	
+	
+	
+	public Customer fetchUser(String userid) throws ResourceNotFoundException {
+		Customer u=custRepo.findById(userid).orElse(null);
+		
+		if(u==null) 
+			throw new ResourceNotFoundException("User not found");
+		else 
+			return u;
 	}
 }
