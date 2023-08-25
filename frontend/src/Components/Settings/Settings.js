@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Input from "./Input";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
     const baseURL = "http://localhost:9080/changePassword";
     const userId = sessionStorage.getItem("userID");
+    const navigate = useNavigate();
     const [data, setData] = useState({
         userId,
         password: "",
@@ -20,16 +22,32 @@ const Settings = () => {
                 password: data.password,
             })
             .then((res) => {
-                toast.success(`Password Changed`, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                if(res.data == "Success!")
+                {
+                    toast.success(res.data, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    navigate("/dashboard");
+                }
+                else {
+                    toast.error(res.data, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
             })
             .catch((error) => {
                 toast.error(`Error: ${error.message}`, {
@@ -57,7 +75,7 @@ const Settings = () => {
                     read={true}
                 />
                 <Input
-                    type="text"
+                    type="password"
                     obj={data}
                     value={"password"}
                     placeholder="New Password"
