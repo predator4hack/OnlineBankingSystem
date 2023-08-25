@@ -48,13 +48,13 @@ function App() {
             <ToastContainer />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/admin/login" element={<AdminLoginPage />} />
-                    <Route path="/admin/signup" element={<AdminSignUp />} />
-                    <Route path="/admin/createCustomer" element={<CreateCustomer />} />
+                    <Route exact path="/login" element={<LoginPage />} />
+                    <Route exact path="/signup" element={<SignUp />} />
+                    <Route exact path="/admin/login" element={<AdminLoginPage />} />
+                    <Route exact path="/admin/signup" element={<AdminSignUp />} />
+                    <Route exact path="/admin/createCustomer" element={<CreateCustomer />} />
                     <Route
-                        path="/offers"
+                        exact path="/offers"
                         Component={() => (
                             <Layout>
                                 <Offers />
@@ -62,7 +62,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/"
+                        exact path="/"
                         Component={() => (
                             <Layout>
                                 <Dashboard />
@@ -70,7 +70,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/admin/dashboard"
+                        exact path="/admin/dashboard"
                         Component={() => (
                             <AdminLayout>
                                 <AdminDashboard />
@@ -78,7 +78,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/admin/transactions"
+                        exact path="/admin/transactions"
                         Component={() => (
                             <AdminLayout>
                                 <AdminTransactions />
@@ -86,7 +86,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/admin/accounts"
+                        exact path="/admin/accounts"
                         Component={() => (
                             <AdminLayout>
                                 <AdminAccounts />
@@ -94,7 +94,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/home"
+                        exact path="/home"
                         Component={() => (
                             <Layout>
                                 <Home />
@@ -102,7 +102,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/dashboard"
+                        exact path="/dashboard"
                         Component={() => (
                             <Layout>
                                 <Dashboard />
@@ -110,7 +110,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/createAccount"
+                        exact path="/createAccount"
                         Component={() => (
                             <Layout>
                                 <CreateAccount />
@@ -118,7 +118,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/accountDashboard/:accno"
+                        exact path="/accountDashboard/:accno"
                         Component={() => (
                             <Layout>
                                 <AccountDashboard />
@@ -134,7 +134,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/transact"
+                        exact path="/transact"
                         Component={() => (
                             <Layout>
                                 <CreateTransaction />
@@ -142,7 +142,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/withdraw"
+                        exact path="/withdraw"
                         Component={() => (
                             <Layout>
                                 <Withdraw />
@@ -150,7 +150,7 @@ function App() {
                         )}
                     />
                     <Route
-                        path="/settings"
+                        exact path="/settings"
                         Component={() => (
                             <Layout>
                                 <Settings />
