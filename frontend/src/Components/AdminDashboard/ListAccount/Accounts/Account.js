@@ -4,6 +4,7 @@ import { ActiveContext } from "../Main";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Icon } from "@iconify/react";
 
 const Container = styled.div`
     display: flex;
@@ -13,13 +14,13 @@ const Container = styled.div`
     cursor: pointer;
     background-color: ${({ theme }) => theme.primary};
     transition: all ease-in-out 300ms;
+    min-width: 900px;
 
     &:hover {
         /* box-shadow: 0px 10px 8px -8px rgba(138, 153, 192, 0.6); */
         background-color: ${({ theme }) => theme.secondary};
     }
 `;
-
 
 const DisableButton = styled.div`
     text-transform: uppercase;
@@ -112,10 +113,12 @@ const AccountTypeImg = styled.img`
     width: 30px;
 `;
 
-const Redirect = styled.img`
+const Redirect = styled(Icon)`
+    color: ${(props) => !props.active && props.theme.textColor};
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    font-weight: 2rem;
     margin-left: auto;
-    height: 15px;
-    width: 15px;
 `;
 const PropertyStreet = styled(Text)`
     font-size: 0.8rem;
@@ -144,7 +147,15 @@ const StatusIndicator = styled.div`
 `;
 
 const Account = ({ data }) => {
-    const { accno, acctype, balance, openingDate, ifsc, branch, disabled } = data;
+    const {
+        accno,
+        acctype,
+        balance,
+        openingDate,
+        ifsc,
+        branch,
+        disabled,
+    } = data;
     const activeContext = useContext(ActiveContext);
     console.log("Active context: ", activeContext);
     const navigate = useNavigate();
@@ -154,21 +165,18 @@ const Account = ({ data }) => {
     const [invalid, setInvalid] = useState(false);
 
     useEffect(() => {
-        if(acctype == "Savings" && balance < 10000)
-            setInvalid(true);
-        else if(acctype == "Current" && balance < 25000)
-            setInvalid(true);
-        else if(acctype == "Salary" && balance < 5000)
-            setInvalid(true);
-        else
-            setInvalid(false);
+        if (acctype == "Savings" && balance < 10000) setInvalid(true);
+        else if (acctype == "Current" && balance < 25000) setInvalid(true);
+        else if (acctype == "Salary" && balance < 5000) setInvalid(true);
+        else setInvalid(false);
     }, [acctype, balance, invalid]);
-    
+
     const toggleDisableHandler = () => {
-        axios.post(`${baseURL}/disable/${accno}/${userid}`)
-        .then((res) => {
-            if(res.data === "Account not found" || res.data === "Account cannot be disabled")
-            {
+        axios.post(`${baseURL}/disable/${accno}/${userid}`).then((res) => {
+            if (
+                res.data === "Account not found" ||
+                res.data === "Account cannot be disabled"
+            ) {
                 toast.error(res.data, {
                     position: "top-right",
                     autoClose: 5000,
@@ -179,8 +187,7 @@ const Account = ({ data }) => {
                     progress: undefined,
                     theme: "light",
                 });
-            }
-            else {
+            } else {
                 toast.success(res.data, {
                     position: "top-right",
                     autoClose: 5000,
@@ -191,12 +198,10 @@ const Account = ({ data }) => {
                     progress: undefined,
                     theme: "light",
                 });
-                if(dis === true)
-                    setDis(false);
-                else
-                    setDis(true);
+                if (dis === true) setDis(false);
+                else setDis(true);
             }
-        })
+        });
     };
 
     return (
@@ -216,15 +221,26 @@ const Account = ({ data }) => {
                 <Subtitle>{ifsc}</Subtitle>
             </Branch>
             <Balance>{acctype}</Balance>
-            {dis && 
-            <EnableButton onClick={() => toggleDisableHandler()}>Enable</EnableButton>}
-            {!dis && invalid &&
-            <DisableButton onClick={() => toggleDisableHandler()}>Disable</DisableButton>}
-            {!dis && !invalid &&
-            <DisableButtonDisabled onClick={() => toggleDisableHandler()}>Disable</DisableButtonDisabled>}
+            {dis && (
+                <EnableButton onClick={() => toggleDisableHandler()}>
+                    Enable
+                </EnableButton>
+            )}
+            {!dis && invalid && (
+                <DisableButton onClick={() => toggleDisableHandler()}>
+                    Disable
+                </DisableButton>
+            )}
+            {!dis && !invalid && (
+                <DisableButtonDisabled onClick={() => toggleDisableHandler()}>
+                    Disable
+                </DisableButtonDisabled>
+            )}
             <Redirect
                 onClick={() => navigate(`/accountDashboard/${accno}`)}
-                src={require(`../../../../assets/images/redirect.png`)}
+                active={accno === activeContext.actAccount}
+                className="iconify"
+                icon="mdi-light:fullscreen"
             />
         </Container>
     );

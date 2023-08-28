@@ -7,6 +7,7 @@ const Container = styled.div`
     padding: 1rem 0;
     border-bottom: 1px solid rgba(190, 190, 190, 0.22);
     cursor: pointer;
+    min-width: 900px;
     background-color: ${({ theme }) => theme.primary};
     transition: all ease-in-out 300ms;
 
@@ -100,10 +101,8 @@ const Transaction = ({ data, accNo }) => {
                     </Subtitle> */}
                 </PropertyText>
             </TransactionNo>
-            {accNo === accFrom && 
-            <NegativeBalance>${amount}</NegativeBalance>}
-            {accNo !== accFrom &&
-            <PositiveBalance>${amount}</PositiveBalance>}
+            {accNo === accFrom && <NegativeBalance>${amount}</NegativeBalance>}
+            {accNo !== accFrom && <PositiveBalance>${amount}</PositiveBalance>}
             <TransferredTo>
                 <Text>{accFrom}</Text>
             </TransferredTo>

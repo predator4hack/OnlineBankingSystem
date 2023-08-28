@@ -32,7 +32,8 @@ const Sidebar = () => {
                         theme: "light",
                     }
                 );
-                navigate("/admin/login");
+                sessionStorage.setItem("userID", user.userid);
+                navigate("/admin/dashboard");
             })
             .catch((error) => {
                 console.log(error);
@@ -81,7 +82,8 @@ const Sidebar = () => {
                     Terms of Service
                 </Terms>
                 <h4>
-                    Already have an admin account? <Link to="/admin/login">Login</Link>
+                    Already have an admin account?{" "}
+                    <Link to="/admin/login">Login</Link>
                 </h4>
             </div>
         </Container>

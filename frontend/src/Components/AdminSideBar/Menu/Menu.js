@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MenuLink from "./MenuLink";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled.div`
     margin-top: 2rem;
@@ -11,6 +12,7 @@ const Container = styled.div`
 const Menu = () => {
     const [activeBtn, setActiveBtn] = useState("");
     const navigate = useNavigate();
+    const windowWidth = WinWidthContext();
 
     const logoutHandler = () => {
         sessionStorage.clear();
@@ -47,8 +49,9 @@ const Menu = () => {
                 setActiveBtn={setActiveBtn}
                 to="/admin/createCustomer"
             />
-            <Button onClick={logoutHandler}>Logout</Button>
-
+            <Button onClick={logoutHandler} windowWidth={windowWidth}>
+                Logout
+            </Button>
         </Container>
     );
 };
@@ -57,7 +60,7 @@ const Button = styled.div`
     text-transform: uppercase;
     width: 20%;
     margin: 2rem;
-    font-size: 0.6rem;
+    font-size: ${(props) => (props.windowWidth >= 900 ? `0.5rem` : `0.3rem`)};
     font-weight: 700;
     background-image: ${({ theme }) => theme.gradient};
     color: #fff;

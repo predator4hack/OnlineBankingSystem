@@ -11,6 +11,7 @@ const Container = styled.div`
     border-bottom: 1px solid rgba(190, 190, 190, 0.22);
     cursor: pointer;
     background-color: ${({ theme }) => theme.primary};
+    min-width: 900px;
     transition: all ease-in-out 300ms;
 
     &:hover {

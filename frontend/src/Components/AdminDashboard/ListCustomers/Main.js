@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Nav from "./Nav";
 import Accounts from "./Customers/Customers";
 import axios from "axios";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? `16rem` : `5rem`)};
     position: relative;
     padding: 0 4rem;
 `;
@@ -17,6 +18,7 @@ const Main = () => {
     const [data, setData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState([]);
+    const windowWidth = WinWidthContext();
 
     const baseURL = "http://localhost:9080";
     const userid = sessionStorage.getItem("userID");
@@ -43,7 +45,7 @@ const Main = () => {
             return (
                 name.toLowerCase().includes(lowerSearchQuery) ||
                 userId.toLowerCase().includes(lowerSearchQuery) ||
-                email.toLowerCase().includes(lowerSearchQuery) || 
+                email.toLowerCase().includes(lowerSearchQuery) ||
                 mobile.toString().includes(lowerSearchQuery)
             );
         });
@@ -52,7 +54,7 @@ const Main = () => {
 
     return (
         <ActiveContext.Provider>
-            <Container>
+            <Container windowWidth={windowWidth}>
                 <Nav />
                 <input
                     type="text"

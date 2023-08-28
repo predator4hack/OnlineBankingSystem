@@ -5,18 +5,13 @@ import DropDownInput from "./DropDownInput";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Main = () => {
     const baseURL = "http://localhost:9080";
     const userId = sessionStorage.getItem("userID");
     const navigate = useNavigate();
-    // const date = new Date();
-    // const openingDate = date.toLocaleString("default", {
-    //     day: "numeric",
-    //     month: "long",
-    //     year: "numeric",
-    // });
-    // const timeTransfer = date.toLocaleTimeString();
+    const windowWidth = WinWidthContext();
     const [accFromOpn, setAccFrom] = useState("");
     const [accOptions, setAccOptions] = useState([]);
     const [transaction, setTransaction] = useState({
@@ -48,7 +43,7 @@ const Main = () => {
         axios
             .post(`${baseURL}/transact`, transaction)
             .then((res) => {
-                if(res.data === "Transaction Success"){
+                if (res.data === "Transaction Success") {
                     toast.success("Money Withdrawn Successfully!", {
                         position: "top-right",
                         autoClose: 5000,
@@ -62,9 +57,8 @@ const Main = () => {
                     setTimeout(() => {
                         navigate("/dashboard");
                     }, 2000);
-                }
-                else {
-                    toast.error('Withdraw Failed', {
+                } else {
+                    toast.error("Withdraw Failed", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -91,7 +85,7 @@ const Main = () => {
             });
     };
     return (
-        <Container>
+        <Container windowWidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
                 <h2>Withdraw Funds</h2>
                 <Input
@@ -123,7 +117,7 @@ const Main = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

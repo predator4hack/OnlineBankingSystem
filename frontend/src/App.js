@@ -27,139 +27,170 @@ import AdminSignUp from "./Components/Auth/AdminSignUp/AdminSignupPage";
 import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import AdminTransactions from "./Components/AdminDashboard/AdminTransactions";
 import AdminAccounts from "./Components/AdminDashboard/AdminAccounts";
+import { WindowWidthProvider } from "./context/WinWidthContext";
 
 function App() {
     const context = useContext(ThemeContext);
     const { theme } = context;
     return (
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
-            <ToastContainer />
-            <BrowserRouter>
-                <Routes>
-                    <Route exact path="/login" element={<LoginPage />} />
-                    <Route exact path="/signup" element={<SignUp />} />
-                    <Route exact path="/admin/login" element={<AdminLoginPage />} />
-                    <Route exact path="/admin/signup" element={<AdminSignUp />} />
-                    <Route exact path="/admin/createCustomer" element={<CreateCustomer />} />
-                    <Route
-                        exact path="/offers"
-                        Component={() => (
-                            <Layout>
-                                <Offers />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/"
-                        Component={() => (
-                            <Layout>
-                                <Dashboard />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/admin/dashboard"
-                        Component={() => (
-                            <AdminLayout>
-                                <AdminDashboard />
-                            </AdminLayout>
-                        )}
-                    />
-                    <Route
-                        exact path="/admin/transactions"
-                        Component={() => (
-                            <AdminLayout>
-                                <AdminTransactions />
-                            </AdminLayout>
-                        )}
-                    />
-                    <Route
-                        exact path="/admin/accounts"
-                        Component={() => (
-                            <AdminLayout>
-                                <AdminAccounts />
-                            </AdminLayout>
-                        )}
-                    />
-                    <Route
-                        exact path="/home"
-                        Component={() => (
-                            <Layout>
-                                <Home />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/dashboard"
-                        Component={() => (
-                            <Layout>
-                                <Dashboard />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/createAccount"
-                        Component={() => (
-                            <Layout>
-                                <CreateAccount />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/accountDashboard/:accno"
-                        Component={() => (
-                            <Layout>
-                                <AccountDashboard />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        path="/transactionDashboard"
-                        Component={() => (
-                            <Layout>
-                                <TransactionDashboard />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/transact"
-                        Component={() => (
-                            <Layout>
-                                <CreateTransaction />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/withdraw"
-                        Component={() => (
-                            <Layout>
-                                <Withdraw />
-                            </Layout>
-                        )}
-                    />
-                    <Route
-                        exact path="/settings"
-                        Component={() => (
-                            <Layout>
-                                <Settings />
-                            </Layout>
-                        )}
-                    />
-                    <Route path="*" element={<NoMatch />} />
-                </Routes>
-            </BrowserRouter>
+            <WindowWidthProvider>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
+                <ToastContainer />
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path="/login" element={<LoginPage />} />
+                        <Route exact path="/signup" element={<SignUp />} />
+                        <Route
+                            exact
+                            path="/admin/login"
+                            element={<AdminLoginPage />}
+                        />
+                        <Route
+                            exact
+                            path="/admin/signup"
+                            element={<AdminSignUp />}
+                        />
+                        <Route
+                            exact
+                            path="/admin/createCustomer"
+                            Component={() => (
+                                <AdminLayout>
+                                    <CreateCustomer />
+                                </AdminLayout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/offers"
+                            Component={() => (
+                                <Layout>
+                                    <Offers />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/"
+                            Component={() => (
+                                <Layout>
+                                    <Dashboard />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/admin/dashboard"
+                            Component={() => (
+                                <AdminLayout>
+                                    <AdminDashboard />
+                                </AdminLayout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/admin/transactions"
+                            Component={() => (
+                                <AdminLayout>
+                                    <AdminTransactions />
+                                </AdminLayout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/admin/accounts"
+                            Component={() => (
+                                <AdminLayout>
+                                    <AdminAccounts />
+                                </AdminLayout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/home"
+                            Component={() => (
+                                <Layout>
+                                    <Home />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/dashboard"
+                            Component={() => (
+                                <Layout>
+                                    <Dashboard />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/createAccount"
+                            Component={() => (
+                                <Layout>
+                                    <CreateAccount />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/accountDashboard/:accno"
+                            Component={() => (
+                                <Layout>
+                                    <AccountDashboard />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            path="/transactionDashboard"
+                            Component={() => (
+                                <Layout>
+                                    <TransactionDashboard />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/transact"
+                            Component={() => (
+                                <Layout>
+                                    <CreateTransaction />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/withdraw"
+                            Component={() => (
+                                <Layout>
+                                    <Withdraw />
+                                </Layout>
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/settings"
+                            Component={() => (
+                                <Layout>
+                                    <Settings />
+                                </Layout>
+                            )}
+                        />
+                        <Route path="*" element={<NoMatch />} />
+                    </Routes>
+                </BrowserRouter>
+            </WindowWidthProvider>
         </ThemeProvider>
     );
 }

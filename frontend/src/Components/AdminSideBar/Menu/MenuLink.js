@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled(NavLink)`
     border-left: 3px solid
@@ -37,21 +38,19 @@ const Title = styled.h1`
 `;
 
 const MenuLink = ({ title, active, icon, setActiveBtn, to }) => {
+    const { pathname } = useLocation();
+    const winWidth = WinWidthContext();
     return (
-        <Container
-            active={active === title ? "true" : ""}
-            onClick={(e) => {
-                setActiveBtn(title);
-            }}
-            to={to}
-        >
+        <Container active={pathname === to ? "true" : ""} to={to}>
             <Span
                 active={active === title ? "true" : ""}
                 className="iconify"
                 inline="false"
                 icon={`mdi-light:${icon}`}
             ></Span>
-            <Title active={active === title ? "true" : ""}>{title}</Title>
+            {winWidth >= 900 && (
+                <Title active={pathname === to ? "true" : ""}>{title}</Title>
+            )}
         </Container>
     );
 };

@@ -5,18 +5,13 @@ import DropDownInput from "./DropDownInput";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Main = () => {
     const baseURL = "http://localhost:9080";
     const userId = sessionStorage.getItem("userID");
     const navigate = useNavigate();
-    // const date = new Date();
-    // const openingDate = date.toLocaleString("default", {
-    //     day: "numeric",
-    //     month: "long",
-    //     year: "numeric",
-    // });
-    // const timeTransfer = date.toLocaleTimeString();
+    const windowWidth = WinWidthContext();
     const [transTypeOpn, setTransType] = useState("");
     const [accFromOpn, setAccFrom] = useState("");
     const transOptions = ["IMPS", "NEFT", "RTGS"];
@@ -52,8 +47,7 @@ const Main = () => {
         axios
             .post(`${baseURL}/transact`, transaction)
             .then((res) => {
-                if(res.data === "Transaction Success")
-                {
+                if (res.data === "Transaction Success") {
                     toast.success("Funds Transferred Successfully!", {
                         position: "top-right",
                         autoClose: 5000,
@@ -67,9 +61,7 @@ const Main = () => {
                     setTimeout(() => {
                         navigate("/dashboard");
                     }, 2000);
-                }
-                else
-                {
+                } else {
                     toast.error("Transaction failed!", {
                         position: "top-right",
                         autoClose: 5000,
@@ -97,7 +89,7 @@ const Main = () => {
             });
     };
     return (
-        <Container>
+        <Container windowWidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
                 <h2>Transfer Funds</h2>
                 <Input
@@ -142,7 +134,7 @@ const Main = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

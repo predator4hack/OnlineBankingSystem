@@ -9,6 +9,7 @@ const Container = styled.div`
     cursor: pointer;
     background-color: ${({ theme }) => theme.primary};
     transition: all ease-in-out 300ms;
+    min-width: 900px;
 
     &:hover {
         /* box-shadow: 0px 10px 8px -8px rgba(138, 153, 192, 0.6); */
