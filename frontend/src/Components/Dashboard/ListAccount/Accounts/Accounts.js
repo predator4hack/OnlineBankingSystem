@@ -9,7 +9,8 @@ const Container = styled.div``;
 const Title = styled.h1`
     font-weight: 500;
     color: ${({ theme }) => theme.textColor};
-    font-size: 1.3rem;
+    font-size: 1.2rem; /* Adjust font size */
+    margin-top: 1rem; /* Add margin for better spacing */
     display: flex;
     align-items: center;
 `;
