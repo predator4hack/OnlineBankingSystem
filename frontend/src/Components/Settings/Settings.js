@@ -4,10 +4,12 @@ import Input from "./Input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import WinWidthContext from "../../context/WinWidthContext";
 
 const Settings = () => {
     const baseURL = "http://localhost:9080/changePassword";
     const userId = sessionStorage.getItem("userID");
+    const windowWidth = WinWidthContext();
     const navigate = useNavigate();
     const [data, setData] = useState({
         userId,
@@ -22,8 +24,7 @@ const Settings = () => {
                 password: data.password,
             })
             .then((res) => {
-                if(res.data == "Success!")
-                {
+                if (res.data == "Success!") {
                     toast.success(res.data, {
                         position: "top-right",
                         autoClose: 5000,
@@ -35,8 +36,7 @@ const Settings = () => {
                         theme: "light",
                     });
                     navigate("/dashboard");
-                }
-                else {
+                } else {
                     toast.error(res.data, {
                         position: "top-right",
                         autoClose: 5000,
@@ -63,7 +63,7 @@ const Settings = () => {
             });
     };
     return (
-        <Container>
+        <Container windowWidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
                 <h2>Change Password</h2>
                 <Input
@@ -96,7 +96,7 @@ const Settings = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

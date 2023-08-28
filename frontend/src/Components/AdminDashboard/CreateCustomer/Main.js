@@ -5,10 +5,12 @@ import AllSubmitBtn from "../../../utils/AllSubmitBtn";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Main = () => {
     const baseURL = "http://localhost:9080/saveCustomer";
     const navigate = useNavigate();
+    const windowWidth = WinWidthContext();
     const [user, setUser] = useState({
         userId: "",
         password: "",
@@ -69,7 +71,10 @@ const Main = () => {
         const birthDate = new Date(user.dob);
         let age = today.getFullYear() - birthDate.getFullYear();
         const month = today.getMonth() - birthDate.getMonth();
-        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        if (
+            month < 0 ||
+            (month === 0 && today.getDate() < birthDate.getDate())
+        ) {
             age--;
         }
 
@@ -87,7 +92,7 @@ const Main = () => {
             return; // Stop the submission if the validation fails
         }
 
-        if(age > 120) {
+        if (age > 120) {
             toast.error("Age must be less than 120 years", {
                 position: "top-right",
                 autoClose: 5000,
@@ -101,7 +106,8 @@ const Main = () => {
             return; // Stop the submission if the validation fails
         }
 
-        axios.post(baseURL, user)
+        axios
+            .post(baseURL, user)
             .then((res) => {
                 toast.success(
                     `The User ${user.name} has been successfully created`,
@@ -134,7 +140,7 @@ const Main = () => {
     };
 
     return (
-        <Container>
+        <Container windowWidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
                 <h3>Add Customer</h3>
                 <Input
@@ -194,7 +200,7 @@ const Main = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

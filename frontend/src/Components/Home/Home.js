@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Profile from "./Profile";
 import axios from "axios";
+import WinWidthContext from "../../context/WinWidthContext";
 
 const Home = () => {
     const baseURL = "http://localhost:9080";
     const userId = sessionStorage.getItem("userID");
     const [user, setUser] = useState({});
+    const windowWidth = WinWidthContext();
     useEffect(() => {
         async function fetchUserData() {
             try {
@@ -21,7 +23,7 @@ const Home = () => {
     }, []);
 
     return (
-        <Container>
+        <Container windowWidth={windowWidth}>
             <Profile name={user.name} />
             <Title>
                 <h1>User Details</h1>
@@ -90,7 +92,7 @@ const Home = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

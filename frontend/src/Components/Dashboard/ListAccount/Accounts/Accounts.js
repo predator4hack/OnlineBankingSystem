@@ -28,6 +28,11 @@ const AccountsCount = styled.div`
     border-radius: 20px;
 `;
 
+const ScrollingContainer = styled.div`
+    overflow-x: auto;
+    white-space: nowrap;
+`;
+
 const Accounts = ({ title, data, count }) => {
     return (
         <Container>
@@ -35,10 +40,12 @@ const Accounts = ({ title, data, count }) => {
                 {title}
                 <AccountsCount>{count}</AccountsCount>
             </Title>
-            <SortingBar />
-            {data.map((account) => (
-                <Account data={account} key={account.accno} />
-            ))}
+            <ScrollingContainer>
+                <SortingBar />
+                {data.map((account) => (
+                    <Account data={account} key={account.accno} />
+                ))}
+            </ScrollingContainer>
             {/* <AllSubmitBtn title={title} /> */}
         </Container>
     );

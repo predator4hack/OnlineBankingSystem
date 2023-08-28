@@ -7,10 +7,11 @@ import NewSubmitBtn from "../../../utils/NewSubmitBtn";
 import Accounts from "./Accounts/Accounts";
 import ListTransaction from "../ListTransaction/ListTransaction";
 import axios from "axios";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 0 4rem;
 `;
@@ -27,7 +28,7 @@ const Main = () => {
     const [tlength, setTlength] = useState(0);
     const userId = sessionStorage.getItem("userID");
     const baseURL = "http://localhost:9080";
-
+    const windowWidth = WinWidthContext();
     useEffect(() => {
         async function fetchAccounts() {
             try {
@@ -71,7 +72,7 @@ const Main = () => {
                 actDispatch: dispatch,
             }}
         >
-            <Container>
+            <Container windowWidth={windowWidth}>
                 <Nav />
                 <NewSubmitBtn to="/createAccount" />
                 <Accounts

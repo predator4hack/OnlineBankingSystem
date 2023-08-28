@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Nav from "./Nav";
 import Accounts from "./Accounts/Accounts";
 import axios from "axios";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 0 4rem;
 `;
@@ -24,6 +25,7 @@ const Main = () => {
     const [filteredData, setFilteredData] = useState([]);
     const baseURL = "http://localhost:9080";
     const userid = sessionStorage.getItem("userID");
+    const windowWidth = WinWidthContext();
 
     useEffect(() => {
         async function fetchAccounts() {
@@ -59,7 +61,7 @@ const Main = () => {
                 actDispatch: dispatch,
             }}
         >
-            <Container>
+            <Container windowWidth={windowWidth}>
                 <Nav />
                 <input
                     type="text"

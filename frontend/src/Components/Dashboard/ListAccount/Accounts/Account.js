@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { ActiveContext } from "../Main";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 const Container = styled.div`
     display: flex;
@@ -9,8 +10,10 @@ const Container = styled.div`
     padding: 1rem 0;
     border-bottom: 1px solid rgba(190, 190, 190, 0.22);
     cursor: pointer;
-    background-color: ${({ theme }) => theme.primary};
+    background-color: ${(props) =>
+        props.active ? props.theme.secondary : props.theme.primary};
     transition: all ease-in-out 300ms;
+    min-width: 900px;
 
     &:hover {
         /* box-shadow: 0px 10px 8px -8px rgba(138, 153, 192, 0.6); */
@@ -48,9 +51,11 @@ const AccountTypeImg = styled.img`
     width: 30px;
 `;
 
-const Redirect = styled.img`
-    height: 15px;
-    width: 15px;
+const Redirect = styled(Icon)`
+    color: ${(props) => !props.active && props.theme.textColor};
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    font-weight: 2rem;
 `;
 const PropertyStreet = styled(Text)`
     font-size: 0.8rem;
@@ -79,12 +84,22 @@ const StatusIndicator = styled.div`
 `;
 
 const Account = ({ data }) => {
-    const { accno, acctype, balance, openingDate, ifsc, branch, disabled } = data;
+    const {
+        accno,
+        acctype,
+        balance,
+        openingDate,
+        ifsc,
+        branch,
+        disabled,
+    } = data;
     const activeContext = useContext(ActiveContext);
-    console.log("Active context: ", activeContext);
     const navigate = useNavigate();
     return (
-        <Container onClick={() => activeContext.actDispatch(accno)}>
+        <Container
+            onClick={() => activeContext.actDispatch(accno)}
+            active={accno === activeContext.actAccount}
+        >
             <AccountNo>
                 <AccountTypeImg
                     src={require(`../../../../assets/images/${acctype.toLowerCase()}.png`)}
@@ -117,7 +132,9 @@ const Account = ({ data }) => {
             </Status>
             <Redirect
                 onClick={() => navigate(`/accountDashboard/${accno}`)}
-                src={require(`../../../../assets/images/redirect.png`)}
+                active={accno === activeContext.actAccount}
+                className="iconify"
+                icon="mdi-light:fullscreen"
             />
         </Container>
     );

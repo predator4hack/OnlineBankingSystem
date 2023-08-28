@@ -68,7 +68,10 @@ const Sidebar = () => {
         const birthDate = new Date(user.dob);
         let age = today.getFullYear() - birthDate.getFullYear();
         const month = today.getMonth() - birthDate.getMonth();
-        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        if (
+            month < 0 ||
+            (month === 0 && today.getDate() < birthDate.getDate())
+        ) {
             age--;
         }
 
@@ -86,8 +89,7 @@ const Sidebar = () => {
             return; // Stop the submission if the validation fails
         }
 
-        if(age > 120)
-        {
+        if (age > 120) {
             toast.error("Age must be less than 120 years", {
                 position: "top-right",
                 autoClose: 5000,
@@ -117,7 +119,8 @@ const Sidebar = () => {
                         theme: "light",
                     }
                 );
-                navigate("/login");
+                sessionStorage.setItem("userID", user.userId);
+                navigate("/dashboard");
             })
             .catch((error) => {
                 console.log(error);

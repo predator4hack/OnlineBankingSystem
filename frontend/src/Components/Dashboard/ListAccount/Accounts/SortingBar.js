@@ -9,6 +9,7 @@ const Container = styled.div`
     margin-top: 2rem;
     margin-bottom: 0.6rem;
     border-radius: 5px;
+    min-width: 900px;
 `;
 
 const Text = styled.h1`

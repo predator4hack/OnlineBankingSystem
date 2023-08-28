@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Nav from "./Nav";
 import Accounts from "./Transactions/Transactions";
 import axios from "axios";
+import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled.div`
     width: auto;
-    margin-left: 16rem;
+    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 0 4rem;
 `;
@@ -17,6 +18,7 @@ const Main = () => {
     const reducer = (state, action) => {
         return action;
     };
+    const windowWidth = WinWidthContext();
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [data, setData] = useState([]);
@@ -44,11 +46,13 @@ const Main = () => {
 
     useEffect(() => {
         const filtered = data.filter((transaction) => {
-            return transaction.accFrom.toString().includes(searchQuery) || 
+            return (
+                transaction.accFrom.toString().includes(searchQuery) ||
                 transaction.accTo.toString().includes(searchQuery) ||
                 transaction.transactionId.toString().includes(searchQuery) ||
-                transaction.transType.includes(searchQuery);
-        }); 
+                transaction.transType.includes(searchQuery)
+            );
+        });
         setFilteredData(filtered);
     }, [data, searchQuery]);
 
@@ -60,7 +64,7 @@ const Main = () => {
                 actDispatch: dispatch,
             }}
         >
-            <Container>
+            <Container windowWidth={windowWidth}>
                 <Nav />
                 <input
                     type="text"

@@ -29,6 +29,11 @@ const TransactionsCount = styled.div`
     border-radius: 20px;
 `;
 
+const ScrollingContainer = styled.div`
+    overflow-x: auto;
+    white-space: nowrap;
+`;
+
 const ListTransaction = ({ title, data, count }) => {
     const activeContext = useContext(ActiveContext);
     return (
@@ -37,14 +42,16 @@ const ListTransaction = ({ title, data, count }) => {
                 {title}
                 <TransactionsCount>{count}</TransactionsCount>
             </Title>
-            <SortingBar />
-            {data.map((transaction) => (
-                <Transaction
-                    data={transaction}
-                    key={transaction.transactionId}
-                    accNo={activeContext.actAccount}
-                />
-            ))}
+            <ScrollingContainer>
+                <SortingBar />
+                {data.map((transaction) => (
+                    <Transaction
+                        data={transaction}
+                        key={transaction.transactionId}
+                        accNo={activeContext.actAccount}
+                    />
+                ))}
+            </ScrollingContainer>
             <AllSubmitBtn
                 title={title}
                 to={`/accountDashboard/${activeContext.actAccount}`}
