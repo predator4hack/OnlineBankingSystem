@@ -9,6 +9,8 @@ import com.bank.Banking.dao.AccRepository;
 import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.dao.AdminRepository;
 import com.bank.Banking.dao.TransactionRepository;
+import com.bank.Banking.exceptions.NoDataFoundException;
+import com.bank.Banking.exceptions.ResourceNotFoundException;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.Admin;
@@ -98,33 +100,46 @@ public class AdminService {
 		}
 	}
 	
-	public List<Customer> getCustomers(String userid)
+	public List<Customer> getCustomers(String userid) throws NoDataFoundException
 	{
 		if(adminRepo.findById(userid).isEmpty())
 		{
-			List<Customer> res = new ArrayList<>();
-			return res;
+			throw new NoDataFoundException("No Customers to Display");
+//			List<Customer> res = new ArrayList<>();
+//			return res;
 		}
 		return custRepo.findAll();
 	}
 	
-	public List<Account> getAccounts(String userid)
+	public List<Account> getAccounts(String userid)  throws NoDataFoundException
 	{
 		if(adminRepo.findById(userid).isEmpty())
 		{
-			List<Account> res = new ArrayList<>();
-			return res;
+//			List<Account> res = new ArrayList<>();
+//			return res;
+			throw new NoDataFoundException("No Accounts to Display");
 		}
 		return accRepo.findAll();
 	}
 	
-	public List<Transaction> getTransactions(String userid)
+	public List<Transaction> getTransactions(String userid)  throws NoDataFoundException
 	{
 		if(adminRepo.findById(userid).isEmpty())
 		{
-			List<Transaction> res = new ArrayList<>();
-			return res;
+//			List<Transaction> res = new ArrayList<>();
+//			return res;
+			throw new NoDataFoundException("No Transactions to Display");
 		}
 		return transRepo.findAll();
+	}
+	
+	
+	public Admin fetchAdmin(String username) throws ResourceNotFoundException
+	{
+		Admin a  = adminRepo.findById(username).orElse(null);
+		if(a==null)
+			throw new ResourceNotFoundException("Admin Not Found");
+		else
+			return a;
 	}
 }

@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.Banking.exceptions.NoDataFoundException;
+import com.bank.Banking.exceptions.ResourceNotFoundException;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.AccountStatement;
 import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.AccountService;
 
-@RestController("AccountController")
+@RestController//("AccountController")
 @CrossOrigin("*")
 public class AccountController {
 	@Autowired
@@ -35,14 +37,14 @@ public class AccountController {
 	}
 	
 	@GetMapping("/fetchTransactions/{accno}")
-	public List<Transaction> fetchTransactions(@PathVariable("accno") long accno)
+	public List<Transaction> fetchTransactions(@PathVariable("accno") long accno) throws NoDataFoundException
 	{
 		List<Transaction> result = accService.fetchTransactions(accno);
 		return result;
 	}
 	
 	@GetMapping("/getAccountDetails/{accno}")
-	public Account getAccountDetails(@PathVariable("accno") long accno)
+	public Account getAccountDetails(@PathVariable("accno") long accno) throws ResourceNotFoundException
 	{
 		return accService.getAccountDetails(accno);
 	}

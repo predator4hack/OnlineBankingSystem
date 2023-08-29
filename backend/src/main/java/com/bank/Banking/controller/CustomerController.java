@@ -14,10 +14,11 @@ import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
 import com.bank.Banking.service.CustomerService;
-import com.bank.Banking.exception.ResourceNotFoundException;
+import com.bank.Banking.exceptions.NoDataFoundException;
+import com.bank.Banking.exceptions.ResourceNotFoundException;
 
 
-@RestController("CustomerController")
+@RestController
 @CrossOrigin("*")
 public class CustomerController {
 	@Autowired
@@ -36,7 +37,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/fetchAccounts/{username}")
-	public List<Account> fetchAccounts(@PathVariable("username") String username)
+	public List<Account> fetchAccounts(@PathVariable("username") String username) throws NoDataFoundException
 	{
 		List<Account> acc = custService.fetchAccounts(username);
 		return acc;
@@ -48,14 +49,16 @@ public class CustomerController {
 		return custService.changePassword(u, otp);
 	}
 	
-	
-	
-	
 
-	@GetMapping("/fetchUser/{username}")
 	
-	public Customer fetchUser(@PathVariable("username") String username) throws ResourceNotFoundException {
-		
-		return custService.fetchUser(username);
-	}
+	@GetMapping("/fetchUser/{username}")
+	  
+	  public Customer fetchUser(@PathVariable("username") String username) throws ResourceNotFoundException{
+		  return custService.fetchUser(username);
+	  }
+	
+	
+	
+	
+	
 }

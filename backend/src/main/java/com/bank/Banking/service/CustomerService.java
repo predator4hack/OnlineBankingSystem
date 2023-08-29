@@ -10,8 +10,8 @@ import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.LoginModel;
-import com.bank.Banking.exception.NoDataFoundException;
-import com.bank.Banking.exception.ResourceNotFoundException;
+import com.bank.Banking.exceptions.NoDataFoundException;
+import com.bank.Banking.exceptions.ResourceNotFoundException;
 
 
 import java.util.ArrayList;
@@ -69,8 +69,12 @@ public class CustomerService {
 		return result;
 	}
 	
-	public List<Account> fetchAccounts(String username)
+	public List<Account> fetchAccounts(String username) throws NoDataFoundException
 	{
+		if(accRepo.findByUsername(username).isEmpty())
+		{
+			throw new NoDataFoundException("No Data to Display");
+		}
 		return accRepo.findByUsername(username);
 	}
 	
@@ -97,20 +101,19 @@ public class CustomerService {
 		return result;
 	}
 	
-//	public Customer fetchUser(String userid)
-//	{
-//		return custRepo.findById(userid).get();
-//	}
+
 	
-	
-	
-	
-	public Customer fetchUser(String userid) throws ResourceNotFoundException {
-		Customer u=custRepo.findById(userid).orElse(null);
-		
-		if(u==null) 
-			throw new ResourceNotFoundException("User not found");
-		else 
+	public Customer fetchUser(String username) throws ResourceNotFoundException
+	{
+		Customer u = custRepo.findById(username).orElse(null);
+		if(u==null)
+			throw new ResourceNotFoundException("User Not Found");
+		else
 			return u;
 	}
+	
+	
+	
+	
+	
 }
