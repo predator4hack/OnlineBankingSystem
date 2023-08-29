@@ -31,7 +31,16 @@ const Main = () => {
                 setAccOptions(res.data.map((obj) => obj.accno));
             })
             .catch((err) => {
-                alert("Error fetching the accounts!");
+                toast.error("No accounts found!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             });
     }, []);
     useEffect(() => {
