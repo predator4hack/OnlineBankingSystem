@@ -4,7 +4,6 @@ import CreateCustomer from "./Components/AdminDashboard/CreateCustomer/createCus
 import React, { Component, useContext } from "react";
 import LoginPage from "./Components/Auth/Login/LoginPage";
 import SignUp from "./Components/Auth/SignUp/SignupPage";
-import Test from "./Components/Test";
 import { ThemeProvider } from "styled-components";
 import { ThemeContext } from "./context/ThemeContext";
 import { lightTheme, darkTheme } from "./styles/theme";
@@ -28,6 +27,7 @@ import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import AdminTransactions from "./Components/AdminDashboard/AdminTransactions";
 import AdminAccounts from "./Components/AdminDashboard/AdminAccounts";
 import { WindowWidthProvider } from "./context/WinWidthContext";
+import ForgotPassword from "./Components/Auth/ForgotPass/ForgotPassword";
 
 function App() {
     const context = useContext(ThemeContext);
@@ -61,6 +61,11 @@ function App() {
                             exact
                             path="/admin/signup"
                             element={<AdminSignUp />}
+                        />
+                        <Route
+                            exact
+                            path="/forgotPassword"
+                            element={<ForgotPassword />}
                         />
                         <Route
                             exact

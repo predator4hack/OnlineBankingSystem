@@ -8,6 +8,8 @@ import Accounts from "./Accounts/Accounts";
 import ListTransaction from "../ListTransaction/ListTransaction";
 import axios from "axios";
 import WinWidthContext from "../../../context/WinWidthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
     width: auto;
@@ -29,9 +31,26 @@ const Main = () => {
     const userId = sessionStorage.getItem("userID");
     const baseURL = "http://localhost:9080";
     const windowWidth = WinWidthContext();
+    const navigate = useNavigate();
     useEffect(() => {
         async function fetchAccounts() {
             try {
+                const user = await axios.get(`${baseURL}/fetchUser/${userId}`);
+                console.log(user);
+                if (user.data.permanentAddress === null) {
+                    toast.info("Please update the user details!", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    navigate("/settings");
+                    return;
+                }
                 const res = await axios.get(
                     `${baseURL}/fetchAccounts/${userId}`
                 );
