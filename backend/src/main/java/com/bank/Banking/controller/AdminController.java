@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+import com.bank.Banking.exceptions.NoDataFoundException;
+import com.bank.Banking.exceptions.ResourceNotFoundException;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
 import com.bank.Banking.model.Admin;
@@ -16,7 +18,7 @@ import com.bank.Banking.model.Transaction;
 import com.bank.Banking.service.AdminService;
 
 
-@RestController("AdminController")
+@RestController
 @CrossOrigin("*")
 public class AdminController {
 	@Autowired
@@ -41,20 +43,26 @@ public class AdminController {
 	}
 	
 	@GetMapping("/getAllCustomers/{userid}")
-	public List<Customer> getCustomers(@PathVariable("userid") String userid)
+	public List<Customer> getCustomers(@PathVariable("userid") String userid) throws NoDataFoundException
 	{
 		return adminService.getCustomers(userid);
 	}
 	
 	@GetMapping("/getAllAccounts/{userid}")
-	public List<Account> getAccounts(@PathVariable("userid") String userid)
+	public List<Account> getAccounts(@PathVariable("userid") String userid)  throws NoDataFoundException
 	{
 		return adminService.getAccounts(userid);
 	}
 	
 	@GetMapping("/getAllTransactions/{userid}")
-	public List<Transaction> getTransactions(@PathVariable("userid") String userid)
+	public List<Transaction> getTransactions(@PathVariable("userid") String userid)  throws NoDataFoundException
 	{
 		return adminService.getTransactions(userid);
 	}
+	
+	@GetMapping("/fetchAdmin/{username}")
+	  
+	  public Admin fetchAdmin(@PathVariable("username") String username) throws ResourceNotFoundException{
+		  return adminService.fetchAdmin(username);
+	  }
 }

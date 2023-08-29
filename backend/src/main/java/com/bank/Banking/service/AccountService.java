@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.bank.Banking.dao.AccRepository;
 import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.dao.TransactionRepository;
+import com.bank.Banking.exceptions.NoDataFoundException;
+import com.bank.Banking.exceptions.ResourceNotFoundException;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.AccountStatement;
 import com.bank.Banking.model.Customer;
@@ -47,14 +49,27 @@ public class AccountService {
 		return accRepo.save(account);
 	}
 	
-	public List<Transaction> fetchTransactions(long accno) {
+
+	public List<Transaction> fetchTransactions(long accno) throws NoDataFoundException
+	{
+		if(transRepo.findByAccountNumber(accno, "SUCCESS").isEmpty())
+		{
+			throw new NoDataFoundException("No Transactions to Display");
+	}
 		return transRepo.findByAccountNumber(accno, "SUCCESS");
 	}
 	
-	public Account getAccountDetails(long accno) {
-		return accRepo.findById(accno).get();
+	public Account getAccountDetails(long accno) throws ResourceNotFoundException
+	{
+		Account acc = accRepo.findById(accno).orElse(null);
+		if(acc==null)
+			throw new ResourceNotFoundException("Account Not Found");
+		else
+			return acc;
 	}
 	
+
+
 	public List<Transaction> accountStatement(long accno, AccountStatement accStat)
 	{
 		List<Transaction> trans = transRepo.findByAccountNumber(accno, "SUCCESS");
