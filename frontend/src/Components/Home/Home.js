@@ -13,7 +13,6 @@ const Home = () => {
         async function fetchUserData() {
             try {
                 const res = await axios.get(`${baseURL}/fetchUser/${userId}`);
-                console.log(res.data);
                 setUser(res.data);
             } catch (e) {
                 console.log(e);
@@ -63,10 +62,34 @@ const Home = () => {
                 </Text>
                 <Text>
                     <Key>
-                        <h1>Address: </h1>
+                        <h1>Father's Name: </h1>
                     </Key>
                     <Value>
-                        <h2>{user.address}</h2>
+                        <h2>{user.fathername}</h2>
+                    </Value>
+                </Text>
+                <Text>
+                    <Key>
+                        <h1>Mother's Name: </h1>
+                    </Key>
+                    <Value>
+                        <h2>{user.mothername}</h2>
+                    </Value>
+                </Text>
+                <Text>
+                    <Key>
+                        <h1>Permanent Address: </h1>
+                    </Key>
+                    <Value>
+                        <h2>{user.permanentAddress}</h2>
+                    </Value>
+                </Text>
+                <Text>
+                    <Key>
+                        <h1>Current Address: </h1>
+                    </Key>
+                    <Value>
+                        <h2>{user.currentAddress}</h2>
                     </Value>
                 </Text>
                 <Text>
@@ -75,14 +98,6 @@ const Home = () => {
                     </Key>
                     <Value>
                         <h2>{user.aadhar}</h2>
-                    </Value>
-                </Text>
-                <Text>
-                    <Key>
-                        <h1>Registered On: </h1>
-                    </Key>
-                    <Value>
-                        <h2>{user.dateOfOpening}</h2>
                     </Value>
                 </Text>
             </Wrapper>

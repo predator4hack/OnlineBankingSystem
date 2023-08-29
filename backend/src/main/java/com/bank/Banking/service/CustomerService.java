@@ -97,13 +97,22 @@ public class CustomerService {
 		return result;
 	}
 	
-//	public Customer fetchUser(String userid)
-//	{
-//		return custRepo.findById(userid).get();
-//	}
-	
-	
-	
+	public String changeDetails(Customer u) {
+		Optional<Customer> obj = custRepo.findById(u.getUserId());
+		Customer cust = null;
+		String result = "";
+		if(obj.isPresent()) cust = obj.get();
+		if(cust == null) result = "Invalid Customer";
+		else {
+			cust.setFathername(u.getFathername());
+			cust.setMothername(u.getMothername());
+			cust.setPermanentAddress(u.getPermanentAddress());
+			cust.setCurrentAddress(u.getCurrentAddress());
+			custRepo.save(cust);
+			result = "Success!";
+		}
+		return result;
+	}
 	
 	public Customer fetchUser(String userid) throws ResourceNotFoundException {
 		Customer u=custRepo.findById(userid).orElse(null);

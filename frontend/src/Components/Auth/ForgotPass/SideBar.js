@@ -7,19 +7,23 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
-    const baseURL = "http://localhost:9080/login";
+    const baseURL = "http://localhost:9080/changePassword";
     const navigate = useNavigate();
     const [user, setUser] = useState({
         userId: "",
         password: "",
+        otp: "",
     });
     const submitFormHandler = (e) => {
         e.preventDefault();
         axios
-            .post(baseURL, user)
+            .put(`${baseURL}/${user.otp}`, {
+                userId: user.userId,
+                password: user.password,
+            })
             .then((res) => {
-                if (res.data === "Login success") {
-                    toast.success(`Logged In Successfully`, {
+                if (res.data == "Success!") {
+                    toast.success(res.data, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -29,23 +33,9 @@ const Sidebar = () => {
                         progress: undefined,
                         theme: "light",
                     });
-                    sessionStorage.setItem("userID", user.userId);
-                    navigate("/dashboard");
-                }
-                if (res.data === "Login failed") {
-                    toast.error(`Wrong Password entered!`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
-                if (res.data === "Invalid Customer") {
-                    toast.error(`User not found!`, {
+                    navigate("/login");
+                } else {
+                    toast.error(res.data, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -80,7 +70,7 @@ const Sidebar = () => {
                 </h3>
             </LogoWrapper>
             <Form onSubmit={submitFormHandler}>
-                <h3>Login</h3>
+                <h3>Forgot Password</h3>
                 <Input
                     type="test"
                     placeholder="Username"
@@ -90,22 +80,22 @@ const Sidebar = () => {
                 />
                 <Input
                     type="password"
-                    placeholder="Password"
+                    placeholder="New Password"
                     value="password"
                     obj={user}
                     handleInputChange={setUser}
                 />
-                <button>Login</button>
+                <Input
+                    type="password"
+                    placeholder="OTP"
+                    value="otp"
+                    obj={user}
+                    handleInputChange={setUser}
+                />
+                <button>Change Password</button>
             </Form>
             <div>
-                <Terms>
-                    By loging up, I agree to the Privacy Policy <br /> and Terms
-                    of Service
-                </Terms>
                 <h4>
-                    <Link to="/forgotPassword">Forgot Password</Link>
-                    <br />
-                    <br />
                     Don't have an account? <Link to="/signup">Sign Up</Link>
                     <br />
                     <br />

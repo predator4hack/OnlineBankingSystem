@@ -1,27 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "./Input";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import WinWidthContext from "../../context/WinWidthContext";
 
 const Settings = () => {
-    const baseURL = "http://localhost:9080/changePassword";
+    const baseURL = "http://localhost:9080";
     const userId = sessionStorage.getItem("userID");
     const windowWidth = WinWidthContext();
     const navigate = useNavigate();
+    const [user, setUser] = useState({});
     const [data, setData] = useState({
-        userId,
-        password: "",
-        otp: "",
+        fathername: null,
+        mothername: null,
+        permanentAddress: null,
+        currentAddress: null,
     });
+
+    useEffect(() => {
+        async function fetchUserData() {
+            try {
+                const res = await axios.get(`${baseURL}/fetchUser/${userId}`);
+                setUser(res.data);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchUserData();
+    }, []);
+
     const submitFormHandler = (e) => {
         e.preventDefault();
         axios
-            .put(`${baseURL}/${data.otp}`, {
-                userId: data.userId,
-                password: data.password,
+            .put(`${baseURL}/changeDetails`, {
+                ...user,
+                permanentAddress: data.permanentAddress,
+                currentAddress: data.currentAddress,
+                fathername: data.fathername,
+                mothername: data.mothername,
             })
             .then((res) => {
                 if (res.data == "Success!") {
@@ -65,30 +83,95 @@ const Settings = () => {
     return (
         <Container windowWidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
-                <h2>Change Password</h2>
+                <h2>Update Details</h2>
                 <Input
                     type="text"
-                    obj={data}
+                    obj={user}
                     value={"userId"}
                     placeholder={`${userId}`}
-                    handleInputChange={setData}
+                    handleInputChange={setUser}
                     read={true}
                 />
                 <Input
-                    type="password"
-                    obj={data}
-                    value={"password"}
-                    placeholder="New Password"
-                    handleInputChange={setData}
+                    type="text"
+                    obj={user}
+                    value={"name"}
+                    placeholder={`${user.name}`}
+                    handleInputChange={setUser}
+                    read={true}
+                />
+                <Input
+                    type="text"
+                    obj={user}
+                    value={"email"}
+                    placeholder={`${user.email}`}
+                    handleInputChange={setUser}
+                    read={true}
+                />
+                <Input
+                    type="text"
+                    obj={user}
+                    value={"dob"}
+                    placeholder={`Date Of Birth: ${user.dob}`}
+                    handleInputChange={setUser}
+                    read={true}
+                />
+                <Input
+                    type="text"
+                    obj={user}
+                    value={"mobile"}
+                    placeholder={`Mobile No. :${user.mobile}`}
+                    handleInputChange={setUser}
+                    read={true}
+                />
+                <Input
+                    type="text"
+                    obj={user}
+                    value={"aadhar"}
+                    placeholder={`Aadhar: ${user.aadhar}`}
+                    handleInputChange={setUser}
+                    read={true}
                 />
                 <Input
                     type="text"
                     obj={data}
-                    value={"otp"}
-                    placeholder="OTP"
+                    value={"fathername"}
+                    placeholder={`Father's Name: ${user.fathername}`}
                     handleInputChange={setData}
+                    read={user.fathername !== null}
                 />
-                <button>Change Password</button>
+                <Input
+                    type="text"
+                    obj={data}
+                    value={"mothername"}
+                    placeholder={`Mother's Name: ${user.mothername}`}
+                    handleInputChange={setData}
+                    read={user.mothername !== null}
+                />
+                <Input
+                    type="text"
+                    obj={data}
+                    value={"permanentAddress"}
+                    placeholder={`Permanent Address: ${user.permanentAddress}`}
+                    handleInputChange={setData}
+                    read={user.permanentAddress !== null}
+                />
+                <Input
+                    type="text"
+                    obj={data}
+                    value={"currentAddress"}
+                    placeholder={`Current Address: ${user.currentAddress}`}
+                    handleInputChange={setData}
+                    read={user.currentAddress !== null}
+                />
+                <PassContainer>
+                    <h4>
+                        <Link to="/forgotPassword">Change Password</Link>
+                    </h4>
+                </PassContainer>
+                {user.permanentAddress === null && (
+                    <button>Change Details</button>
+                )}
             </Form>
         </Container>
     );
@@ -106,15 +189,18 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+`;
 
+const PassContainer = styled.div`
+    margin-left: 14rem;
     h4 {
         color: #808080;
         font-weight: bold;
         font-size: 13px;
-        margin-top: 2rem;
+        margin-top: 1rem;
 
         a {
-            color: #ff8d8d;
+            color: ${({ theme }) => theme.textColor};
             cursor: pointer;
             text-decoration: none;
         }

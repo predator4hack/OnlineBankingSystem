@@ -48,10 +48,11 @@ public class CustomerController {
 		return custService.changePassword(u, otp);
 	}
 	
+	@PutMapping("/changeDetails")
+	public String changeDetails(@RequestBody Customer u) {
+		return custService.changeDetails(u);
+	}
 	
-	
-	
-
 	@GetMapping("/fetchUser/{username}")
 	
 	public Customer fetchUser(@PathVariable("username") String username) throws ResourceNotFoundException {
