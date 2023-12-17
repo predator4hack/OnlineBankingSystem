@@ -22,6 +22,11 @@ import com.bank.Banking.exceptions.ResourceNotFoundException;
 public class CustomerController {
 	@Autowired
 	CustomerService custService;
+	
+	@GetMapping("/test")
+	public String testCustomer() {
+		return "It's OK";
+	}
 
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@RequestBody Customer cust) {
