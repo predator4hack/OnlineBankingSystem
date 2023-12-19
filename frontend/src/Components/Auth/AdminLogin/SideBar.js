@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
-    const baseURL = "http://localhost:9080/adminLogin";
+    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080/adminLogin`;
     const navigate = useNavigate();
     const [user, setUser] = useState({
         userid: "",
@@ -18,7 +18,7 @@ const Sidebar = () => {
         axios
             .post(baseURL, user)
             .then((res) => {
-                if(res.data === "Login success"){
+                if (res.data === "Login success") {
                     toast.success(`Logged In Successfully`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -32,7 +32,7 @@ const Sidebar = () => {
                     sessionStorage.setItem("userID", user.userid);
                     navigate("/admin/dashboard");
                 }
-                if(res.data === "Login failed"){
+                if (res.data === "Login failed") {
                     toast.error(`Wrong Password entered!`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -44,7 +44,7 @@ const Sidebar = () => {
                         theme: "light",
                     });
                 }
-                if(res.data === "Invalid Admin"){
+                if (res.data === "Invalid Admin") {
                     toast.error(`User not found!`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -103,8 +103,10 @@ const Sidebar = () => {
                     of Service
                 </Terms>
                 <h4>
-                    Don't have an admin account? <Link to="/admin/signup">Sign Up</Link>
-                    <br/><br/>
+                    Don't have an admin account?{" "}
+                    <Link to="/admin/signup">Sign Up</Link>
+                    <br />
+                    <br />
                     Are you a customer? <Link to="/login">Customer Login</Link>
                 </h4>
             </div>

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Main = () => {
-    const baseURL = "http://localhost:9080/createAccount";
+    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080/createAccount`;
     const userId = sessionStorage.getItem("userID");
     const date = new Date();
     const navigate = useNavigate();
@@ -26,8 +26,16 @@ const Main = () => {
         openingDate,
     });
 
-    const typeOptions = ['Savings', 'Salary', 'Current'];
-    const branchOptions = ['Bangalore', 'Hyderabad', 'Chennai', 'Mumbai', 'Delhi', 'Kolkata', 'Pune'];
+    const typeOptions = ["Savings", "Salary", "Current"];
+    const branchOptions = [
+        "Bangalore",
+        "Hyderabad",
+        "Chennai",
+        "Mumbai",
+        "Delhi",
+        "Kolkata",
+        "Pune",
+    ];
 
     const [accType, setAccType] = useState("");
     const [branchType, setBranchType] = useState("");
@@ -60,7 +68,7 @@ const Main = () => {
                 );
                 setTimeout(() => {
                     navigate("/dashboard");
-                  }, 2000);
+                }, 2000);
             })
             .catch((error) => {
                 toast.error(`Error: ${error.message}`, {
