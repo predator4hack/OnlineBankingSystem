@@ -14,7 +14,7 @@ Developed using Spring Boot and react, offering wide range of features:
 
 ## Deployment
 
-This project is deployed on amazon EC2 instance: [Project Link](http://ec2-107-20-53-146.compute-1.amazonaws.com:3000)
+This project is deployed on amazon EC2 instance: [online-banking-system.cloud](http://online-banking-system.cloud)
 
 [Presentation Link](https://www.canva.com/design/DAFswtChkpY/Hqjp-K7aNZTCo0d-F4dOqQ/view?utm_content=DAFswtChkpY&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
