@@ -159,7 +159,7 @@ const Account = ({ data }) => {
     const activeContext = useContext(ActiveContext);
     console.log("Active context: ", activeContext);
     const navigate = useNavigate();
-    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}`;
     const userid = sessionStorage.getItem("userID");
     const [dis, setDis] = useState(disabled);
     const [invalid, setInvalid] = useState(false);

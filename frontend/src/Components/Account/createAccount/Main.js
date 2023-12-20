@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Main = () => {
-    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080/createAccount`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}/createAccount`;
     const userId = sessionStorage.getItem("userID");
     const date = new Date();
     const navigate = useNavigate();

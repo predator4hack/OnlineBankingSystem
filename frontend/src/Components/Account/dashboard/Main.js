@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ListTransaction from "./ListTransaction/ListTransaction";
 
 const Main = () => {
-    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}`;
     const { accno } = useParams();
     const userId = sessionStorage.getItem("userID");
     const [tdata, setTdata] = useState([]);

@@ -23,7 +23,7 @@ const Main = () => {
     const [tdata, setTdata] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState([]);
-    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}`;
     const userid = sessionStorage.getItem("userID");
     const windowWidth = WinWidthContext();
 

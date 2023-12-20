@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import WinWidthContext from "../../../context/WinWidthContext";
 
 const Main = () => {
-    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080/saveCustomer`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}/saveCustomer`;
     const navigate = useNavigate();
     const windowWidth = WinWidthContext();
     const [user, setUser] = useState({

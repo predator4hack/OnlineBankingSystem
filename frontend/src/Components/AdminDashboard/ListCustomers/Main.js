@@ -20,7 +20,7 @@ const Main = () => {
     const [filteredData, setFilteredData] = useState([]);
     const windowWidth = WinWidthContext();
 
-    const baseURL = `http://${process.env.REACT_APP_API_URL}:9080`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}`;
     const userid = sessionStorage.getItem("userID");
 
     useEffect(() => {
