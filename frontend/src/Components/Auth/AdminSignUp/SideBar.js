@@ -33,6 +33,7 @@ const Sidebar = () => {
                     }
                 );
                 sessionStorage.setItem("userID", user.userid);
+                sessionStorage.setItem("jwtToken", "Bearer " + res.data.token);
                 navigate("/admin/dashboard");
             })
             .catch((error) => {

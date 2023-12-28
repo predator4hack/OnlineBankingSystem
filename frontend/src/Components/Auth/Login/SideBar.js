@@ -18,7 +18,8 @@ const Sidebar = () => {
         axios
             .post(baseURL, user)
             .then((res) => {
-                if (res.data === "Login success") {
+                console.log(res);
+                if (res.status === 200) {
                     toast.success(`Logged In Successfully`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -30,22 +31,13 @@ const Sidebar = () => {
                         theme: "light",
                     });
                     sessionStorage.setItem("userID", user.userId);
+                    sessionStorage.setItem(
+                        "jwtToken",
+                        "Bearer " + res.data.token
+                    );
                     navigate("/dashboard");
-                }
-                if (res.data === "Login failed") {
-                    toast.error(`Wrong Password entered!`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
-                if (res.data === "Invalid Customer") {
-                    toast.error(`User not found!`, {
+                } else {
+                    toast.error(`Login Failed!`, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,

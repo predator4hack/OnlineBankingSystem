@@ -22,30 +22,18 @@ const Sidebar = () => {
                 password: user.password,
             })
             .then((res) => {
-                if (res.data == "Success!") {
-                    toast.success(res.data, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                    navigate("/login");
-                } else {
-                    toast.error(res.data, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
+                console.log(res);
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                navigate("/login");
             })
             .catch((error) => {
                 toast.error(`Error: ${error.message}`, {

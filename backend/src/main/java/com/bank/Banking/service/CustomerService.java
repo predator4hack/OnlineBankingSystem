@@ -3,13 +3,22 @@ package com.bank.Banking.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bank.Banking.dao.AccRepository;
 import com.bank.Banking.dao.CustomerRepository;
 import com.bank.Banking.model.Account;
 import com.bank.Banking.model.Customer;
+import com.bank.Banking.model.JwtResponse;
 import com.bank.Banking.model.LoginModel;
+import com.bank.Banking.model.MessageResponse;
+import com.bank.Banking.security.JwtUtils;
 import com.bank.Banking.exceptions.NoDataFoundException;
 import com.bank.Banking.exceptions.ResourceNotFoundException;
 
@@ -23,38 +32,34 @@ public class CustomerService {
 
 	@Autowired
 	AccRepository accRepo;
+	
+	@Autowired
+	AuthenticationManager authenticationManager;
+	
+	@Autowired
+	PasswordEncoder encoder;
+	
+	@Autowired
+	JwtUtils jwtUtils;
 
-	public String saveCustomer(Customer cust) {
-		String result = "";
+	public ResponseEntity<?> saveCustomer(Customer cust) {
 		Optional<Customer> o = custRepo.findById(cust.getUserId());
-		if (o.isPresent()) {
-			result = "Customer already exists!";
-		} else {
-			result = "Customer created successfully!";
-			Customer obj = custRepo.save(cust);
+		if(o.isPresent()) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Username Already Exists"));
 		}
-		return result;
+		cust.setPassword(encoder.encode(cust.getPassword()));
+		custRepo.save(cust);
+		String jwt = jwtUtils.generateJwtTokenUser(cust.getUserId());
+		return ResponseEntity.ok(new JwtResponse(jwt, cust.getUserId()));
 	}
 
-	public String validateCustomer(LoginModel u) {
-		Customer cust = null;
-		String result = "";
-
-		Optional<Customer> obj = custRepo.findById(u.getUserId());
-
-		if (obj.isPresent()) {
-			cust = obj.get();
-		}
-		if (cust == null) {
-			result = "Invalid Customer";
-		} else {
-			if (u.getPassword().equals(cust.getPassword())) {
-				result = "Login success";
-			} else {
-				result = "Login failed";
-			}
-		}
-		return result;
+	public ResponseEntity<?> validateCustomer(LoginModel loginRequest) {
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUserId(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		Customer cust = (Customer) authentication.getPrincipal();
+		return ResponseEntity.ok(new JwtResponse(jwt, cust.getUserId()));
 	}
 
 	public List<Account> fetchAccounts(String username) throws NoDataFoundException {
@@ -64,52 +69,42 @@ public class CustomerService {
 		return accRepo.findByUsername(username);
 	}
 
-	public String changePassword(LoginModel u, String otp) {
-		String result = "";
+	public ResponseEntity<?> changePassword(LoginModel u, String otp) {
 		Customer cust = null;
 		Optional<Customer> obj = custRepo.findById(u.getUserId());
 
 		if (obj.isPresent())
 			cust = obj.get();
 		if (cust == null)
-			result = "Invalid customer";
-		else {
-			if (otp.equals("111111")) {
-				cust.setPassword(u.getPassword());
-				custRepo.save(cust);
-				result = "Success!";
-			} else
-				result = "Invalid OTP";
+			return ResponseEntity.badRequest().body(new MessageResponse("Invalid customer"));
+		if (otp.equals("111111")) {
+			cust.setPassword(encoder.encode(u.getPassword()));
+			custRepo.save(cust);
+			return ResponseEntity.ok(new MessageResponse("Successfully Changed the password!"));
 		}
-		return result;
+		return ResponseEntity.badRequest().body(new MessageResponse("Invalid OTP!"));
 	}
 
-	public String changeDetails(Customer u) {
+	public ResponseEntity<?> changeDetails(Customer u) {
 		Optional<Customer> obj = custRepo.findById(u.getUserId());
 		Customer cust = null;
-		String result = "";
 		if (obj.isPresent())
 			cust = obj.get();
 		if (cust == null)
-			result = "Invalid Customer";
-		else {
-			cust.setFathername(u.getFathername());
-			cust.setMothername(u.getMothername());
-			cust.setPermanentAddress(u.getPermanentAddress());
-			cust.setCurrentAddress(u.getCurrentAddress());
-			custRepo.save(cust);
-			result = "Success!";
-		}
-		return result;
+			return ResponseEntity.badRequest().body(new MessageResponse("Invalid Customer"));
+		cust.setFathername(u.getFathername());
+		cust.setMothername(u.getMothername());
+		cust.setPermanentAddress(u.getPermanentAddress());
+		cust.setCurrentAddress(u.getCurrentAddress());
+		custRepo.save(cust);
+		return ResponseEntity.ok(new MessageResponse("Success"));
 	}
 
 	public Customer fetchUser(String userid) throws ResourceNotFoundException {
 		Customer u = custRepo.findById(userid).orElse(null);
-
 		if (u == null)
 			throw new ResourceNotFoundException("User not found");
-		else
-			return u;
+		return u;
 	}
 
 }

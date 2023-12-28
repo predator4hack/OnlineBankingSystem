@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
-    const baseURL = `http://${process.env.REACT_APP_API_URL}/saveCustomer`;
+    const baseURL = `http://${process.env.REACT_APP_API_URL}/signup`;
     const navigate = useNavigate();
     const [user, setUser] = useState({
         userId: "",
@@ -120,6 +120,7 @@ const Sidebar = () => {
                     }
                 );
                 sessionStorage.setItem("userID", user.userId);
+                sessionStorage.setItem("jwtToken", "Bearer " + res.data.token);
                 navigate("/dashboard");
             })
             .catch((error) => {

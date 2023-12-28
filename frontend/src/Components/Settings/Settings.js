@@ -42,30 +42,17 @@ const Settings = () => {
                 mothername: data.mothername,
             })
             .then((res) => {
-                if (res.data == "Success!") {
-                    toast.success(res.data, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                    navigate("/dashboard");
-                } else {
-                    toast.error(res.data, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                navigate("/dashboard");
             })
             .catch((error) => {
                 toast.error(`Error: ${error.message}`, {

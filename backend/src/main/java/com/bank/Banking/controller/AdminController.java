@@ -1,6 +1,7 @@
 package com.bank.Banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,43 +26,36 @@ public class AdminController {
 	AdminService adminService;
 	
 	@PostMapping("/saveAdmin")
-	public String saveAdmin(@RequestBody Admin admin)
-	{
+	public ResponseEntity<?> saveAdmin(@RequestBody Admin admin) {
 		return adminService.saveAdmin(admin);
 	}
 	
 	@PostMapping("/adminLogin")
-	public String adminLogin(@RequestBody Admin admin)
-	{
+	public ResponseEntity<?> adminLogin(@RequestBody Admin admin) {
 		return adminService.adminLogin(admin);
 	}
 	
 	@PostMapping("/disable/{accno}/{userid}")
-	public String toggleDisable(@PathVariable("accno") long accno, @PathVariable("userid") String userid)
-	{
+	public String toggleDisable(@PathVariable("accno") long accno, @PathVariable("userid") String userid) {
 		return adminService.toggleDisable(accno, userid);
 	}
 	
 	@GetMapping("/getAllCustomers/{userid}")
-	public List<Customer> getCustomers(@PathVariable("userid") String userid) throws NoDataFoundException
-	{
+	public List<Customer> getCustomers(@PathVariable("userid") String userid) throws NoDataFoundException {
 		return adminService.getCustomers(userid);
 	}
 	
 	@GetMapping("/getAllAccounts/{userid}")
-	public List<Account> getAccounts(@PathVariable("userid") String userid)  throws NoDataFoundException
-	{
+	public List<Account> getAccounts(@PathVariable("userid") String userid)  throws NoDataFoundException {
 		return adminService.getAccounts(userid);
 	}
 	
 	@GetMapping("/getAllTransactions/{userid}")
-	public List<Transaction> getTransactions(@PathVariable("userid") String userid)  throws NoDataFoundException
-	{
+	public List<Transaction> getTransactions(@PathVariable("userid") String userid)  throws NoDataFoundException {
 		return adminService.getTransactions(userid);
 	}
 	
 	@GetMapping("/fetchAdmin/{username}")
-	  
 	  public Admin fetchAdmin(@PathVariable("username") String username) throws ResourceNotFoundException{
 		  return adminService.fetchAdmin(username);
 	  }

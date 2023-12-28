@@ -28,6 +28,26 @@ import AdminTransactions from "./Components/AdminDashboard/AdminTransactions";
 import AdminAccounts from "./Components/AdminDashboard/AdminAccounts";
 import { WindowWidthProvider } from "./context/WinWidthContext";
 import ForgotPassword from "./Components/Auth/ForgotPass/ForgotPassword";
+import setAuthToken from "./utils/SetAuthToken";
+import { jwtDecode } from "jwt-decode";
+
+if (sessionStorage.getItem("jwtToken")) {
+    // Set Auth Token header auth
+    const token = sessionStorage.getItem("jwtToken");
+    setAuthToken(token);
+    console.log(token);
+    // Decode token and get user info and exp
+    const decoded = jwtDecode(token);
+    // Check for expired token
+    const currentTime = Date.now() / 1000; // in milliseconds
+    if (decoded.exp < currentTime) {
+        // Logout user
+        sessionStorage.removeItem("jwtToken");
+        setAuthToken(false);
+        // Redirect to login
+        window.location.href = "./login";
+    }
+}
 
 function App() {
     const context = useContext(ThemeContext);

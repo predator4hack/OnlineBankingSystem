@@ -2,13 +2,17 @@ package com.bank.Banking.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Entity
-public class Customer {
+public class Customer implements UserDetails{
 	@Id
 	@Column(nullable=false)
 	private String userId;
@@ -17,7 +21,7 @@ public class Customer {
 	private String name;
 	
 	@Column(nullable=false)
-	@Length(min=8, max=20, message="Password must be between 8 to 20 characters")
+	@Length(min=8, message="Password must be greater than or equal to 8 characters")
 	private String password;
 	
 	@Column(nullable=false)
@@ -116,5 +120,35 @@ public class Customer {
 	}
 	public void setAadhar(String aadhar) {
 		this.aadhar = aadhar;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.userId;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
