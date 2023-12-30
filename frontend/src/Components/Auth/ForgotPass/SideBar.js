@@ -134,9 +134,10 @@ const Form = styled.form`
 `;
 
 const LogoWrapper = styled.div`
+    text-align: center;
     img {
         height: 6rem;
-        width: 14rem;
+        width: 7rem;
     }
 
     h3 {
