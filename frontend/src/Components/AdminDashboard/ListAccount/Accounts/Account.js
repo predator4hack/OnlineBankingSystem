@@ -165,9 +165,9 @@ const Account = ({ data }) => {
     const [invalid, setInvalid] = useState(false);
 
     useEffect(() => {
-        if (acctype == "Savings" && balance < 10000) setInvalid(true);
-        else if (acctype == "Current" && balance < 25000) setInvalid(true);
-        else if (acctype == "Salary" && balance < 5000) setInvalid(true);
+        if (acctype === "Savings" && balance < 10000) setInvalid(true);
+        else if (acctype === "Current" && balance < 25000) setInvalid(true);
+        else if (acctype === "Salary" && balance < 5000) setInvalid(true);
         else setInvalid(false);
     }, [acctype, balance, invalid]);
 

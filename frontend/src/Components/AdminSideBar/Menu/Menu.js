@@ -49,7 +49,7 @@ const Menu = () => {
                 setActiveBtn={setActiveBtn}
                 to="/admin/createCustomer"
             />
-            <Button onClick={logoutHandler} windowWidth={windowWidth}>
+            <Button onClick={logoutHandler} windowwidth={windowWidth}>
                 Logout
             </Button>
         </Container>
@@ -60,7 +60,7 @@ const Button = styled.div`
     text-transform: uppercase;
     width: 20%;
     margin: 2rem;
-    font-size: ${(props) => (props.windowWidth >= 900 ? `0.5rem` : `0.3rem`)};
+    font-size: ${(props) => (props.windowwidth >= 900 ? `0.5rem` : `0.3rem`)};
     font-weight: 700;
     background-image: ${({ theme }) => theme.gradient};
     color: #fff;

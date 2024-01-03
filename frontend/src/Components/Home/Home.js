@@ -22,7 +22,7 @@ const Home = () => {
     }, []);
 
     return (
-        <Container windowWidth={windowWidth}>
+        <Container windowwidth={windowWidth}>
             <Profile name={user.name} />
             <Title>
                 <h1>User Details</h1>
@@ -107,7 +107,7 @@ const Home = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
+    margin-left: ${(props) => (props.windowwidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

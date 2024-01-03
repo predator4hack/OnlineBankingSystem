@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 
 const Container = styled.div`
     width: auto;
-    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
+    margin-left: ${(props) => (props.windowwidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 0 4rem;
 `;
@@ -35,8 +35,8 @@ const Main = () => {
     useEffect(() => {
         async function fetchAccounts() {
             try {
+                console.log("inside dashboard main js");
                 const user = await axios.get(`${baseURL}/fetchUser/${userId}`);
-                console.log(user);
                 if (user.data.permanentAddress === null) {
                     toast.info("Please update the user details!", {
                         position: "top-right",
@@ -91,7 +91,7 @@ const Main = () => {
                 actDispatch: dispatch,
             }}
         >
-            <Container windowWidth={windowWidth}>
+            <Container windowwidth={windowWidth}>
                 <Nav />
                 <NewSubmitBtn to="/createAccount" />
                 <Accounts

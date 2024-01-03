@@ -7,7 +7,7 @@ import WinWidthContext from "../../../context/WinWidthContext";
 
 const Container = styled.div`
     width: auto;
-    margin-left: ${(props) => (props.windowWidth >= 900 ? `16rem` : `5rem`)};
+    margin-left: ${(props) => (props.windowwidth >= 900 ? `16rem` : `5rem`)};
     position: relative;
     padding: 0 4rem;
 `;
@@ -54,7 +54,7 @@ const Main = () => {
 
     return (
         <ActiveContext.Provider>
-            <Container windowWidth={windowWidth}>
+            <Container windowwidth={windowWidth}>
                 <Nav />
                 <input
                     type="text"

@@ -11,7 +11,7 @@ const Container = styled.div`
     left: 0;
     top: 0;
     bottom: 0;
-    width: ${(props) => (props.winWidth >= 900 ? `16rem` : `5rem`)};
+    width: ${(props) => (props.winwidth >= 900 ? `16rem` : `5rem`)};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +20,7 @@ const Container = styled.div`
 const Sidebar = () => {
     const windowWidth = WinWidthContext();
     return (
-        <Container winWidth={windowWidth}>
+        <Container winwidth={windowWidth}>
             <Profile />
             <Menu />
             <ToggleSwitch />

@@ -8,13 +8,13 @@ const Layout = ({ children }) => {
     const navigate = useNavigate();
     console.log(userId);
     useEffect(() => {
-        if (userId === null) navigate("/login");
+        if (userId == null) navigate("/login");
     }, []);
     return (
         <>
             <GlobalStyles />
             <Sidebar />
-            {children}
+            {userId !== null && children}
         </>
     );
 };

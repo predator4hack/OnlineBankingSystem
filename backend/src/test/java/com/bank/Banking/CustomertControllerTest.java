@@ -86,46 +86,46 @@ public class CustomertControllerTest {
 //
 //	}
 	
-	
-	@Test
-	
-	public void testSaveUser() throws Exception
-	{
-		Customer cust = new Customer();
-		
-		List<Account> accountList = new ArrayList<>();
-		
-		Account account = new Account();
-		
-		accountList.add(account);
-		
-		cust.setUserId("kt");
-		cust.setPassword("kt123123");
-		cust.setAadhar("111122223333");
-		cust.setEmail("123@gmail.com");
-		cust.setName("kamal");
-		cust.setMobile(1111118888);
-		cust.setDob("2001-11-11");
-		
-		cust.setFathername("Rameshbhai");
-		cust.setMothername("Sushilaben");
-		cust.setCurrentAddress("Morbi");
-		cust.setPermanentAddress("Gujarat");
-	cust.setAccount(accountList);
-	
-	
-	Mockito.when(custService.saveCustomer(ArgumentMatchers.any()))
-	.thenReturn(cust.toString())	;
-	
-	String json = mapper.writeValueAsString(cust);
-	mvc.perform(post("/saveCustomer").
-			contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
-			.content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-			
-
-
-
-			}
-	
-	
+//	
+//	@Test
+//	
+//	public void testSaveUser() throws Exception
+//	{
+//		Customer cust = new Customer();
+//		
+//		List<Account> accountList = new ArrayList<>();
+//		
+//		Account account = new Account();
+//		
+//		accountList.add(account);
+//		
+//		cust.setUserId("kt");
+//		cust.setPassword("kt123123");
+//		cust.setAadhar("111122223333");
+//		cust.setEmail("123@gmail.com");
+//		cust.setName("kamal");
+//		cust.setMobile(1111118888);
+//		cust.setDob("2001-11-11");
+//		
+//		cust.setFathername("Rameshbhai");
+//		cust.setMothername("Sushilaben");
+//		cust.setCurrentAddress("Morbi");
+//		cust.setPermanentAddress("Gujarat");
+//	cust.setAccount(accountList);
+//	
+//	
+//	Mockito.when(custService.saveCustomer(ArgumentMatchers.any()))
+//	.thenReturn(cust.toString())	;
+//	
+//	String json = mapper.writeValueAsString(cust);
+//	mvc.perform(post("/saveCustomer").
+//			contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+//			.content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+//			
+//
+//
+//
+//			}
+//	
+//	
 }

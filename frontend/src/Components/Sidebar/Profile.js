@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const ProfileImg = styled.img`
-    height: ${(props) => (props.windowWidth >= 900 ? `5rem` : `2rem`)};
+    height: ${(props) => (props.windowwidth >= 900 ? `5rem` : `2rem`)};
 `;
 const ProfileName = styled.h1`
     font-size: 1rem;
@@ -21,7 +21,7 @@ const Profile = () => {
     const windowWidth = WinWidthContext();
     return (
         <Container>
-            <ProfileImg src={Image} windowWidth={windowWidth} />
+            <ProfileImg src={Image} windowwidth={windowWidth} />
             {windowWidth >= 900 && <ProfileName>{username}</ProfileName>}
         </Container>
     );

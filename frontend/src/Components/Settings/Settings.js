@@ -68,7 +68,7 @@ const Settings = () => {
             });
     };
     return (
-        <Container windowWidth={windowWidth}>
+        <Container windowwidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
                 <h2>Update Details</h2>
                 <Input
@@ -166,7 +166,7 @@ const Settings = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
+    margin-left: ${(props) => (props.windowwidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;

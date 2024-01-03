@@ -94,7 +94,7 @@ const Main = () => {
             });
     };
     return (
-        <Container windowWidth={windowWidth}>
+        <Container windowwidth={windowWidth}>
             <Form onSubmit={submitFormHandler}>
                 <h2>Withdraw Funds</h2>
                 <Input
@@ -126,7 +126,7 @@ const Main = () => {
 
 const Container = styled.div`
     width: auto;
-    margin-left: ${(props) => (props.windowWidth >= 900 ? "16rem" : "5rem")};
+    margin-left: ${(props) => (props.windowwidth >= 900 ? "16rem" : "5rem")};
     position: relative;
     padding: 5rem 4rem;
     min-width: 400px;
